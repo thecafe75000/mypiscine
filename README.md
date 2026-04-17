@@ -1,8 +1,3 @@
-
-#### todolist:
-
-- C1 ex3: ft_print_combn
-
 #### shell
 
 - marvin
