@@ -28,7 +28,7 @@ int	check_line(int line[SIZE], int left, int right)
 	return (count_visible(line, SIZE - 1, -1) == right);
 }
 
-int	check_row(int grid[SIZE][SIZE], int clues[16], int row)
+int	check_row(int grid[SIZE][SIZE], int inputs[16], int row)
 {
 	int	line[SIZE];
 	int	col;
@@ -39,10 +39,10 @@ int	check_row(int grid[SIZE][SIZE], int clues[16], int row)
 		line[col] = grid[row][col];
 		col++;
 	}
-	return (check_line(line, clues[8 + row], clues[12 + row]));
+	return (check_line(line, inputs[8 + row], inputs[12 + row]));
 }
 
-int	check_col(int grid[SIZE][SIZE], int clues[16], int col)
+int	check_col(int grid[SIZE][SIZE], int inputs[16], int col)
 {
 	int	line[SIZE];
 	int	row;
@@ -53,5 +53,5 @@ int	check_col(int grid[SIZE][SIZE], int clues[16], int col)
 		line[row] = grid[row][col];
 		row++;
 	}
-	return (check_line(line, clues[col], clues[4 + col]));
+	return (check_line(line, inputs[col], inputs[4 + col]));
 }

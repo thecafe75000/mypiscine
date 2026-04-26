@@ -1,6 +1,7 @@
 #include "rush01.h"
 
-int	parse_input(char *str, int clues[16])
+// 检查用户输入是否合法，并把输入里的 16 个提示数字存进 inputs 数组
+int	parse_input(char *str, int inputs[16])
 {
 	int	i;
 	int	j;
@@ -11,7 +12,7 @@ int	parse_input(char *str, int clues[16])
 	{
 		if (j >= 16 || str[i] < '1' || str[i] > '4')
 			return (0);
-		clues[j] = str[i] - '0';
+		inputs[j] = str[i] - '0';
 		j++;
 		i++;
 		if (j < 16)

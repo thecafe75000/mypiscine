@@ -14,16 +14,17 @@ int	can_place(int grid[SIZE][SIZE], int row, int col, int value)
 	return (1);
 }
 
-static int	is_valid_now(int grid[SIZE][SIZE], int clues[16], int row, int col)
+static int	is_valid_now(int grid[SIZE][SIZE], int inputs[16], int row, int col)
 {
-	if (col == SIZE - 1 && !check_row(grid, clues, row))
+	if (col == SIZE - 1 && !check_row(grid, inputs, row))
 		return (0);
-	if (row == SIZE - 1 && !check_col(grid, clues, col))
+	if (row == SIZE - 1 && !check_col(grid, inputs, col))
 		return (0);
 	return (1);
 }
 
-int	solve_grid(int grid[SIZE][SIZE], int clues[16], int pos)
+// 用回溯法填满 4x4 棋盘
+int	solve_grid(int grid[SIZE][SIZE], int inputs[16], int pos)
 {
 	int	row;
 	int	col;
@@ -39,8 +40,8 @@ int	solve_grid(int grid[SIZE][SIZE], int clues[16], int pos)
 		if (can_place(grid, row, col, value))
 		{
 			grid[row][col] = value;
-			if (is_valid_now(grid, clues, row, col)
-				&& solve_grid(grid, clues, pos + 1))
+			if (is_valid_now(grid, inputs, row, col) && solve_grid(grid, inputs,
+					pos + 1))
 				return (1);
 			grid[row][col] = 0;
 		}
