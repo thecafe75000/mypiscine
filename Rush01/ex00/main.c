@@ -1,5 +1,8 @@
 #include "rush01.h"
 
+/*
+ main.c 负责主流程：检查参数，调用用户输入，调用解决方案，输出结果
+*/
 static void	init_grid(int grid[SIZE][SIZE])
 {
 	int	row;
