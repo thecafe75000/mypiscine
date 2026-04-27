@@ -1,7 +1,7 @@
 #include "rush01.h"
 
 // 检查用户输入是否合法，并把输入里的 16 个提示数字存进 inputs 数组
-int	parse_input(char *str, int inputs[16])
+int	check_user_input(char *str, int inputs[16])
 {
 	int	i;
 	int	j;
