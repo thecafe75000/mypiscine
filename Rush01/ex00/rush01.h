@@ -5,7 +5,7 @@
 
 #define SIZE 4
 
-int	check_user_input(char *str, int inputs[16]);
+int	check_user_inputs(char *str, int inputs[16]);
 int	solve_grid(int grid[SIZE][SIZE], int inputs[16], int pos);
 int	can_place(int grid[SIZE][SIZE], int row, int col, int value);
 int	check_line(int line[SIZE], int left, int right);

@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	int	inputs[16];
 	int	grid[SIZE][SIZE];
 
-	if (argc != 2 || !parse_input(argv[1], inputs))
+	if (argc != 2 || !check_user_inputs(argv[1], inputs))
 	{
 		print_error();
 		return (1);
