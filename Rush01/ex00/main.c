@@ -20,16 +20,16 @@ static void	init_grid(int grid[SIZE][SIZE])
 
 int	main(int argc, char **argv)
 {
-	int	clues[16];
+	int	inputs[16];
 	int	grid[SIZE][SIZE];
 
-	if (argc != 2 || !parse_input(argv[1], clues))
+	if (argc != 2 || !parse_input(argv[1], inputs))
 	{
 		print_error();
 		return (1);
 	}
 	init_grid(grid);
-	if (!solve_grid(grid, clues, 0))
+	if (!solve_grid(grid, inputs, 0))
 	{
 		print_error();
 		return (1);

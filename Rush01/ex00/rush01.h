@@ -1,9 +1,9 @@
 #ifndef RUSH01_H
-# define RUSH01_H
+#define RUSH01_H
 
-# include <unistd.h>
+#include <unistd.h>
 
-# define SIZE 4
+#define SIZE 4
 
 int	parse_input(char *str, int inputs[16]);
 int	solve_grid(int grid[SIZE][SIZE], int inputs[16], int pos);
