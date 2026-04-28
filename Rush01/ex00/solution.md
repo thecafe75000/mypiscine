@@ -222,4 +222,235 @@ can_place(grid, row, col, value)
 这样可以尽早排除错误答案
 
 ##### 10. 如何检查一行？
+比如第 row 行：
+```c
+grid[row][0] grid[row][1] grid[row][2] grid[row][3]
+先把它取出来：
+line[0] = grid[row][0]
+line[1] = grid[row][1]
+line[2] = grid[row][2]
+line[3] = grid[row][3]
+然后根据输入规则找到这一行对应的左右情况：
+左边：inputs[8 + row]
+右边：inputs[12 + row]
+
+输入规则就是chapiter 3 里的运行格式：
+./rush-01 "col1up col2up col3up col4up col1down col2down col3down col4down row1left row2left row3left row4left row1right row2right row3right row4right"
+也就是说，用户传进来的16个数字是按这个固定顺序排的：
+第 1 - 4 个：   col1up   col2up   col3up   col4up
+第 5 - 8 个：   col1down col2down col3down col4down
+第 9 - 12 个：  row1left row2left row3left row4left
+第 13 - 16 个： row1right row2right row3right row4right
+
+C 数组下标从 0 开始，所以放进 inputs[16] 后，对应关系变成：
+inputs[0]  = col1up
+inputs[1]  = col2up
+inputs[2]  = col3up
+inputs[3]  = col4up
+
+inputs[4]  = col1down
+inputs[5]  = col2down
+inputs[6]  = col3down
+inputs[7]  = col4down
+
+inputs[8]  = row1left
+inputs[9]  = row2left
+inputs[10] = row3left
+inputs[11] = row4left
+
+inputs[12] = row1right
+inputs[13] = row2right
+inputs[14] = row3right
+inputs[15] = row4right
+
+所以检查某一行时，才会这样写：
+left = inputs[8 + row];
+right = inputs[12 + row];
+原因是：左边从 inputs[8] 开始，右边提示从 inputs[12] 开始
+
+然后调用：
+check_line(line, inputs[8 + row], inputs[12 + row])
+
+例如第1行 row = 0:
+左边：inputs[8]
+右边：inputs[12]
+
+再例如第4行 row = 3:
+左边：inputs[11]
+右边: inputs[15]
+```
+
+###### 11. 如何检查一列
+比如第 col 列：
+```c
+grid[0][col]
+grid[1][col]
+grid[2][col]
+grid[3][col]
+这一列对应的上下情况是：
+上边：inputs[col]
+下边：inputs[4 + col]
+
+然后调用：
+check_line(line, inputs[col], inputs[4 + col])
+
+例如第 1 列 col = 0：
+上边：inputs[0]
+下边：inputs[4]
+
+第 4 列 col = 3：
+上边：inputs[3]
+下边：inputs[7]
+```
+
+##### 12. 回溯函数的整体流程
+核心函数可以理解成：
+```c
+solve_grid(grid, inputs, pos)
+
+意思是：
+尝试从第 pos 个格子开始，把整个棋盘填完
+
+流程如下：
+如果 pos == 16：
+    说明 16 个格子都填完了
+    找到答案
+    返回成功
+
+根据 pos 算出 row 和 col
+
+value 从 1 到 4 依次尝试：
+    如果 value 可以放在 grid[row][col]：
+        放进去
+
+        如果当前行刚填完：
+            检查这一行
+            如果不合法，撤销这个数字，换下一个 value
+
+        如果当前列刚填完：
+            检查这一列
+            如果不合法，撤销这个数字，换下一个 value
+
+        如果这些检查都通过：
+            继续递归 solve_grid(grid, clues, pos + 1)
+
+        如果后面成功：
+            返回成功
+
+        如果后面失败：
+            撤销这个数字，换下一个 value
+
+所有 value 都试完还不行：
+    返回失败
+
+用大白话就是：
+试 1
+能放就继续
+后面死了就回来
+
+试 2
+能放就继续
+后面死了就回来
+
+试 3
+试 4
+都不行，就告诉上一层：这条路走不通
+```
+
+##### 13. 用程序方式
+程序的通用做法是：
+```c
+试数字
+检查行列重复
+检查已完成的行列可见性
+不行就退
+直到找到第一个完整答案
+
+也就是说，它不需要知道：看到 4 个就一定是 1 2 3 4
+它只需要在尝试过程中自然排除错误情况
+例如第1行它会尝试很多组合：
+1 2 3 4  合法
+1 2 4 3  从左看不是 4，排除
+1 3 2 4  从左看不是 4，排除
+...
+最后只有符合提示的行能留下来
+```
+
+##### 14. 要先处理error
+程序一开始必须先判断：
+```c
+是不是只有一个参数
+是不是刚好 16 个数字
+数字是不是都在 1 到 4
+格式是不是正确
+
+如果输入都错了，根本不用进入解题逻辑，直接：Error
+这就是为什么有check_user_inputs.c
+```
+
+##### 15. 为什么要把代码拆成几个文件？
+构思代码结构时，按职责拆：
+```c
+main.c
+负责主流程：检查参数、调用用户输入、调用解决方案、输出结果
+
+check_user_inputs.c
+负责输入字符串是否合法
+
+solve.c
+负责回溯填棋盘
+
+check——grid.c
+负责检查行列可见性
+
+output.c
+负责输出答案或 Error
+
+rush01.h
+负责所有公共声明
+```
+答辩时可以解释：
+```c
+输入是否合法，看 check_user_inputs.c
+怎么解题，看 solve.c
+怎么看见几个盒子，看 check_grid.c
+怎么输出，看 output.c
+函数声明看 rush01.h
+```
+
+##### 16. 整个解题步骤总结成以下流程
+完整流程：
+```c
+启动程序
+↓
+检查参数数量
+↓
+解析 16 个提示数字
+↓
+初始化 4x4 棋盘为 0
+↓
+从第 0 个格子开始回溯
+↓
+每个格子依次尝试 1、2、3、4
+↓
+检查同行同列是否重复
+↓
+如果一行填满，检查左右可见数量
+↓
+如果一列填满，检查上下可见数量
+↓
+如果全部 16 个格子填完，说明找到答案
+↓
+打印第一个答案
+↓
+如果中途所有可能都失败，打印 Error
+
+也就是：
+先看输入对不对，输入对了，就一个格子一个格子试
+每次放数字前，先看同行同列有没有重复
+一行或一列填满后，马上看它是不是符合外面的提示
+不符合就撤回重试
+最后找到一个完整合法的棋盘就输出
+找不到就输出 Error
+```
 
