@@ -47,31 +47,50 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
+int	is_overflow(long result, int sign, char c)
+{
+	if (sign == 1 && (result > 214748364 || (result == 214748364 && c > '7')))
+		return (1);
+	if (sign == -1 && (result > 214748364 || (result == 214748364 && c > '8')))
+		return (-1);
+	return (0);
+}
+
+// 把主函数里的下标变量 i 的地址传进去，让辅助函数可以修改主函数里的 i
+int	ft_sign(const char *str, int *i)
+{
+	int	sign;
+
+	sign = 1;
+	if (str[*i] == '-' || str[*i] == '+')
+	{
+		if (str[*i] == '-')
+			sign = -1;
+		(*i)++;
+	}
+	return (sign);
+}
+
 // 加入溢出处理后的版本
 int	ft_atoi2(const char *str)
 {
 	int		i;
 	int		sign;
 	long	result;
+	int		overflow;
 
 	i = 0;
 	sign = 1;
 	result = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
+	sign = ft_sign(str, &i);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (sign == 1 && (result > 214748364 || (result == 214748364
-					&& str[i] > '7')))
+		overflow = is_overflow(result, sign, str[i]);
+		if (overflow == 1)
 			return (2147483647);
-		if (sign == -1 && (result > 214748364 || (result == 214748364
-					&& str[i] > '8')))
+		if (overflow == -1)
 			return (-2147483647 - 1);
 		result = result * 10 + str[i] - '0';
 		i++;
