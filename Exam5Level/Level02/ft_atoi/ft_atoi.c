@@ -13,6 +13,15 @@ Your function must be declared as follows:
 int	ft_atoi(const char *str);
 */
 
+/*
+	标准 atoi 本身不处理int取值范围的溢出问题
+	1. 跳过开头的空白字符 (开头的空白字符可以有多个)
+	2. 判断是否有一个正负号 (正负号最多只能有一个)
+	3. 从当前位置开始读取连续数字 (数字必须连续), 每读到一个数字字符，就把它转换成int类型的数字
+	4. 遇到第1个非数字就立即停止转换
+	5. 返回转换得到的整数
+*/
+
 int	ft_atoi(const char *str)
 {
 	int	i;
@@ -38,6 +47,38 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
+// 加入溢出处理后的版本
+int	ft_atoi2(const char *str)
+{
+	int		i;
+	int		sign;
+	long	result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (sign == 1 && (result > 214748364 || (result == 214748364
+					&& str[i] > '7')))
+			return (2147483647);
+		if (sign == -1 && (result > 214748364 || (result == 214748364
+					&& str[i] > '8')))
+			return (-2147483647 - 1);
+		result = result * 10 + str[i] - '0';
+		i++;
+	}
+	return ((int)(result * sign));
+}
+
 #include <stdio.h>
 
 int	main(void)
@@ -47,5 +88,18 @@ int	main(void)
 	printf("%d\n", ft_atoi("+123"));
 	printf("%d\n", ft_atoi("123abc"));
 	printf("%d\n", ft_atoi("abc123"));
+	printf("%d\n", ft_atoi("--123"));
+	printf("%d\n", ft_atoi("+-123"));
+	printf("%d\n", ft_atoi("1234567890123456789"));
+	printf("----------\n\n");
+	printf("%d\n", ft_atoi2("42"));
+	printf("%d\n", ft_atoi2("   -42"));
+	printf("%d\n", ft_atoi2("+123"));
+	printf("%d\n", ft_atoi2("123abc"));
+	printf("%d\n", ft_atoi2("abc123"));
+	printf("%d\n", ft_atoi2("--123"));
+	printf("%d\n", ft_atoi2("+-123"));
+	printf("%d\n", ft_atoi2("1234567890123456789"));
+	printf("%d\n", ft_atoi2("-1234567890123456789"));
 	return (0);
 }
