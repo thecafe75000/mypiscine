@@ -79,6 +79,31 @@ unsigned char	reverse_bits(unsigned char octet)
 		result = result + 1;
 	return (result);
 }
+/*
+unsigned char	reverse_bits(unsigned char octet)
+{
+	unsigned char	result;
+
+	result = 0;
+	if (octet & 1)
+		result = result | 128;
+	if (octet & 2)
+		result = result | 64;
+	if (octet & 4)
+		result = result | 32;
+	if (octet & 8)
+		result = result | 16;
+	if (octet & 16)
+		result = result | 8;
+	if (octet & 32)
+		result = result | 4;
+	if (octet & 64)
+		result = result | 2;
+	if (octet & 128)
+		result = result | 1;
+	return (result);
+}
+*/
 
 /*
 unsigned char	reverse_bits(unsigned char octet)
@@ -149,6 +174,8 @@ int	main(void)
 {
 	unsigned char	x;
 	unsigned char	y;
+	unsigned char	a;
+	unsigned char	b;
 
 	x = 36;
 	y = reverse_bits(x);
@@ -159,6 +186,16 @@ int	main(void)
 	printf("\n");
 	printf("x reversed binary : ");
 	print_bits(y);
+	printf("\n\n");
+	a = 1;
+	b = reverse_bits(a);
+	printf("a = %u\n", a);
+	printf("b = %u\n", b);
+	printf("a original binary : ");
+	print_bits(a);
+	printf("\n");
+	printf("a reversed binary : ");
+	print_bits(b);
 	printf("\n");
 	return (0);
 }
