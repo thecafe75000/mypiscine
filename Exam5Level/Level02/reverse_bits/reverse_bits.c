@@ -50,29 +50,10 @@ _____________
 	2^5 = 32
 	2^6 = 64
 	2^7 = 128
-*/
-/*
-unsigned char	reverse_bits(unsigned char octet)
-{
-	unsigned char	result;
-	unsigned char	read_bit;
-	unsigned char	write_bit;
-	int				i;
 
-	result = 0;
-	read_bit = 1;
-	write_bit = 128;
-	i = 0;
-	while (i < 8)
-	{
-		if (octet & read_bit)
-			result = result + write_bit;
-		read_bit = read_bit * 2;
-		write_bit = write_bit / 2;
-		i++;
-	}
-	return (result);
-}
+	所有 8 位反转后仍等于自己的数, 在 unsigned char 的 8 位范围 0 ~ 255 里，
+	一共有 16 个 数满足, 因为它们都有一个共同特点，即二进制左右对称，这16个数是：
+	0 24 36 60 66 90 102 126 129 153 165 189 195 219 231 255
 */
 
 unsigned char	reverse_bits(unsigned char octet)
@@ -98,6 +79,30 @@ unsigned char	reverse_bits(unsigned char octet)
 		result = result + 1;
 	return (result);
 }
+
+/*
+unsigned char	reverse_bits(unsigned char octet)
+{
+	unsigned char	result;
+	unsigned char	read_bit;
+	unsigned char	write_bit;
+	int				i;
+
+	result = 0;
+	read_bit = 1;
+	write_bit = 128;
+	i = 0;
+	while (i < 8)
+	{
+		if (octet & read_bit)
+			result = result + write_bit;
+		read_bit = read_bit * 2;
+		write_bit = write_bit / 2;
+		i++;
+	}
+	return (result);
+}
+*/
 
 /*
 unsigned char	reverse_bits(unsigned char octet)
@@ -145,7 +150,7 @@ int	main(void)
 	unsigned char	x;
 	unsigned char	y;
 
-	x = 1;
+	x = 36;
 	y = reverse_bits(x);
 	printf("x = %u\n", x);
 	printf("y = %u\n", y);
