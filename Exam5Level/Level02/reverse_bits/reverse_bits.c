@@ -55,7 +55,9 @@ _____________
 	一共有 16 个 数满足, 因为它们都有一个共同特点，即二进制左右对称，这16个数是：
 	0 24 36 60 66 90 102 126 129 153 165 189 195 219 231 255
 */
-
+/*代码做了2件事情：
+		1. 用 octet & 某个数，检查 octet 的某一位是不是 1
+		2. 如果那一位是 1，就把 result 中“反方向对应的位置”设置成 1
 unsigned char	reverse_bits(unsigned char octet)
 {
 	unsigned char	result;
@@ -79,14 +81,17 @@ unsigned char	reverse_bits(unsigned char octet)
 		result = result + 1;
 	return (result);
 }
-/*
+*/
+
 unsigned char	reverse_bits(unsigned char octet)
 {
 	unsigned char	result;
 
 	result = 0;
+	// 如果 octet 最右边第 1 个 bit 是 1，就把 result 最左边第 1 个 bit 设置成 1
 	if (octet & 1)
 		result = result | 128;
+	// 如果 octet 右边第 2 个 bit 是 1，就把 result 左边第 2 个 bit 设置成 1，后面的if以此类推
 	if (octet & 2)
 		result = result | 64;
 	if (octet & 4)
@@ -103,7 +108,6 @@ unsigned char	reverse_bits(unsigned char octet)
 		result = result | 1;
 	return (result);
 }
-*/
 
 /*
 unsigned char	reverse_bits(unsigned char octet)
@@ -177,7 +181,7 @@ int	main(void)
 	unsigned char	a;
 	unsigned char	b;
 
-	x = 36;
+	x = 38;
 	y = reverse_bits(x);
 	printf("x = %u\n", x);
 	printf("y = %u\n", y);
