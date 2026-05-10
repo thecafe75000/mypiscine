@@ -108,18 +108,23 @@ unsigned char	reverse_bits(unsigned char octet)
 	如果某位是 0，就什么也不做，result 的镜像位置保持 0；
 	因此最终得到 bit 反转结果
 
-	& 是 按位与，规则是：两个都是 1，结果才是 1；只要有一个是 0，结果就是 0
+	& 是 按位与，规则是：
 	0 & 0 = 0
 	0 & 1 = 0
 	1 & 0 = 0
 	1 & 1 = 1
+	&：只要碰到 0，结果就变成 0，两个都是 1 才给 1
+	所以任意一位 & 0  一定变成 0，任意一位 & 1  保持原样
+	也就是说 某一位 & 1 = 该位它自己， 某一位 & 0 = 0
 
-	| 是 按位或，规则是：只要有一个是 1，结果就是 1， 两个都是 0，结果才是 0
+	| 是 按位或，规则是：
 		0 | 0 = 0
 		0 | 1 = 1
 		1 | 0 = 1
 		1 | 1 = 1
+	|：只要碰到 1，结果就变成 1，有一个是 1 就给 1
 */
+/*
 unsigned char	reverse_bits(unsigned char octet)
 {
 	unsigned char	result;
@@ -148,30 +153,35 @@ unsigned char	reverse_bits(unsigned char octet)
 		result = result | 1;
 	return (result);
 }
+*/
 
 /*
+	octet & (1 << i):
+		按位与位运算结果不是 0，说明 octet 第 i 位是 1
+		按位与位运算结果是 0，说明 octet 第 i 位是 0
+		(1 << i) 为 1 的位，在运算结果中保留 octet 的对应位；
+		(1 << i) 为 0 的位，在运算结果中变成 0；
+		octet 本身不变，因为没有赋值
+
+	result = result | (1 << (7 - i)):
+		(1 << (7 - i)) 为 1 的位，会把 result 对应位设置成 1；
+		(1 << (7 - i)) 为 0 的位，result 对应位保持不变
+*/
 unsigned char	reverse_bits(unsigned char octet)
 {
 	unsigned char	result;
-	unsigned char	read_bit;
-	unsigned char	write_bit;
 	int				i;
 
 	result = 0;
-	read_bit = 1;
-	write_bit = 128;
 	i = 0;
 	while (i < 8)
 	{
-		if (octet & read_bit)
-			result = result + write_bit;
-		read_bit = read_bit * 2;
-		write_bit = write_bit / 2;
+		if (octet & (1 << i))
+			result = result | (1 << (7 - i));
 		i++;
 	}
 	return (result);
 }
-*/
 
 /*
 unsigned char	reverse_bits(unsigned char octet)
