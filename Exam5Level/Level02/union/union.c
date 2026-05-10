@@ -38,10 +38,43 @@ $>
 
 #include <unistd.h>
 
+// 初始化数组show，每个元素的值都初始化为0
+void	init_show(int *show)
+{
+	int	i;
+
+	i = 0;
+	while (i < 256)
+	{
+		show[i] = 0;
+		i++;
+	}
+}
+void	print_new_chars(char *s, int *show)
+{
+	unsigned char	c;
+
+	while (*s)
+	{
+		c = (unsigned char)*s;
+		if (show[c] == 0)
+		{
+			write(1, s, 1);
+			show[c] = 1;
+		}
+		s++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
+	int	show[256]; // 准备 256 个格子，用来记录每一种可能的字符是否已经出现过
+
 	if (argc == 3)
 	{
+		init_show(show);
+		print_new_chars(argv[1], show);
+		print_new_chars(argv[2], show);
 	}
 	write(1, "\n", 1);
 	return (0);
