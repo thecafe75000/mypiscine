@@ -21,10 +21,19 @@ _____________
 	把它的 高 4 位 和 低 4 位 交换 (即其二进制的左边4位和右边4位交换)，
 	然后返回交换后的结果
 */
-
+/*
+	| 的作用就是“把有 1 的地方保留下来”
+	先左移位再右移位，先右移位再左移位都可以
+	因为两边都是用原始的 octet 计算临时结果，然后再合并
+	但不可以把它理解成：
+	octet = octet << 4;
+	octet = octet >> 4;
+	return (octet);
+	octet没有被改变
+*/
 unsigned char	swap_bits(unsigned char octet)
 {
-	return ((octet >> 4) | (octet << 4));
+	return ((octet << 4) | (octet >> 4));
 }
 
 #include <stdio.h>
