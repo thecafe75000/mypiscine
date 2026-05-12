@@ -61,20 +61,16 @@ int	main(int argc, char **argv)
 		x = atoi(argv[1]);
 		y = atoi(argv[3]);
 		operator= argv[2][0];
-		if (operator == '/' && y == 0)
-			printf("NOT take 0 in case of division operation\n");
-		else if (operator == '%' && y == 0)
-			printf("NOT take 0 in case of modulo operation\n");
-		else if (operator == '+')
-			result = x + y;
-		else if (operator == '-')
-			result = x - y;
-		else if (operator == '*')
-			result = x * y;
-		else if (operator == '/')
-			result = x / y;
-		else if (operator == '%')
-			result = x % y;
+		if ((operator== '/' || operator == '%') && y == 0)
+		{
+			printf("NOT take 0 in case of division and module operation\n");
+			return (0);
+		}
+		else if (operator== '+') result = x + y;
+		else if (operator== '-') result = x - y;
+		else if (operator== '*') result = x * y;
+		else if (operator== '/') result = x / y;
+		else if (operator== '%') result = x % y;
 		printf("%d\n", result);
 	}
 	else
