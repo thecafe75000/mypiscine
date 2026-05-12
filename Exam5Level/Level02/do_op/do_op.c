@@ -61,15 +61,19 @@ int	main(int argc, char **argv)
 		x = atoi(argv[1]);
 		y = atoi(argv[3]);
 		operator= argv[2][0];
-		if (operator== '+')
+		if (operator == '/' && y == 0)
+			printf("NOT take 0 in case of division operation\n");
+		else if (operator == '%' && y == 0)
+			printf("NOT take 0 in case of modulo operation\n");
+		else if (operator == '+')
 			result = x + y;
-		else if (operator== '-')
+		else if (operator == '-')
 			result = x - y;
-		else if (operator== '*')
+		else if (operator == '*')
 			result = x * y;
-		else if (operator== '/')
+		else if (operator == '/')
 			result = x / y;
-		else
+		else if (operator == '%')
 			result = x % y;
 		printf("%d\n", result);
 	}
