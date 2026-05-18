@@ -15,7 +15,6 @@ Examples:
 - With (0, 0) you will return an array containing 0.
 - With (0, -3) you will return an array containing -3, -2, -1 and 0.
 
-详细解释从0到最后完成这题的每个解题步骤, 同时解释为什么这么构思
 */
 /*
 	动态申请一个 int 数组，把从 end 到 start 的所有整数按顺序放进去，然后返回这个数组的地址
@@ -25,8 +24,8 @@ Examples:
 		先算出需要几个整数；
 		用 malloc(sizeof(int) * len) 申请内存；
 		从 end 开始填；
-		如果 end > start, 从 end 往下走, 每次减 1；
-		如果 end < start, 从 end 往上走, 每次加 1；
+		如果 end > start, 数值从 end 往下走, 每次减 1；
+		如果 end < start, 数值从 end 往上走, 每次加 1；
 		如果 end == start，数组里只有一个数
 		最后返回数组
 */
