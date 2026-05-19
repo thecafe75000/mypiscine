@@ -39,7 +39,15 @@ $
 			用余数替换被除数 x 重复上诉过程
 			直到余数为0，最后那个数就是最大公约数
 		gcd(x, y) = gcd(y, x%y)
-		每次用y替换x, x%y替换y 直到出现x%y等于0时，y就是最大公约数
+		每次用y替换x, x%y替换y 直到出现x%
+		例如：gcd(42, 12) 变成 gcd(12, 42 % 12), 也就是变成 gcd(12, 6)
+		也就是这3行代码：
+			temp = y;
+			y = x % y;
+			x = temp;
+		核心规律：
+			gcd(a, b) == gcd(b, a % b)
+			直到 b == 0，这时 a 就是最大公约数
 */
 #include <stdio.h>
 #include <stdlib.h>
