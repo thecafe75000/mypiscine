@@ -5,6 +5,7 @@ Allowed functions: malloc
 --------------------------------------------------------------------------------
 Write the following function:
 int			*ft_rrange(int start, int end);
+
 It must allocate (with malloc()) an array of integers, fill it with consecutive
 values that begin at end and end at start (Including start and end !), then
 return a pointer to the first value of the array.
@@ -94,15 +95,19 @@ int	main(void)
 	int	*arr2;
 	int	k;
 	int	*arr3;
+	int	m;
+	int	*arr4;
 	int	length1;
 	int	length2;
 	int	length3;
+	int	length4;
 
-	length1 = get_len(0, -3);
+	length1 = get_len(1, 3);
 	length2 = get_len(-1, 2);
 	length3 = get_len(0, 0);
+	length4 = get_len(0, -3);
 	i = 0;
-	arr1 = ft_rrange(0, -3);
+	arr1 = ft_rrange(1, 3);
 	while (i < length1)
 	{
 		printf("%d ", arr1[i]);
@@ -127,6 +132,15 @@ int	main(void)
 		k++;
 	}
 	free(arr3);
+	printf("\n\n");
+	m = 0;
+	arr4 = ft_rrange(0, -3);
+	while (m < length4)
+	{
+		printf("%d ", arr4[m]);
+		m++;
+	}
+	free(arr4);
 	printf("\n");
 	return (0);
 }
