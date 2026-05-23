@@ -101,7 +101,7 @@ int	main(void)
 	head->next->next->next = new_node("orange");
 	printf("Before:\n");
 	print_list(head);
-	ft_list_remove_if(&head, "apple", cmp_str);
+	ft_list_remove_if(&head, "cherry", cmp_str);
 	printf("\n");
 	printf("After:\n");
 	print_list(head);
