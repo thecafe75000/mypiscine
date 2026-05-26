@@ -16,7 +16,7 @@ If base is 10 and value is negative, the resulting string is preceded with a
 minus sign (-). With any other base, value is always considered unsigned.
 
 Your function must be declared as follows:
-char	*ft_itoa_base(int value, int base);
+char				*ft_itoa_base(int value, int base);
 */
 /*
 	按“从 0 开始写出完整程序”的方式解释这题怎么想、怎么拆、为什么这样构思
@@ -89,7 +89,17 @@ static unsigned int	get_nbr(int value, int base, int *sign)
 	}
 	return ((unsigned int)value);
 }
-
+/*
+	ft_itoa_base 应该按这个顺序写：
+		1. 得到真正要转换的数字 nbr
+		2. 得到是否有负号 has_minus
+		3. 计算字符串长度 len
+		4. malloc len + 1 个字符
+		5. 最后一位放 '\0'
+		6. 从后往前填数字字符
+		7. 如果有负号，str[0] = '-'
+		8. 返回 str
+*/
 char	*ft_itoa_base(int value, int base)
 {
 	char			*str;
