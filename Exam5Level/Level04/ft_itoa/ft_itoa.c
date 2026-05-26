@@ -10,8 +10,6 @@ Your function must be declared as follows:
 char	*ft_itoa(int nbr);
 */
 /*
-	按“从 0 开始写出完整程序”的方式解释这题怎么想、怎么拆、为什么这样构思
-
 	把一个 int 整数转换成一个 C 字符串
 	考你能不能自己把整数拆成每一位字符，并且正确申请内存保存最终字符串
 	具体要求：
@@ -37,7 +35,7 @@ char	*ft_itoa(int nbr);
 
 #include <stdlib.h>
 
-// 整数 nbr 转成字符串以后，需要多少个可见字符
+// 计算整数 nbr 转成字符串以后，需要多少个可见字符
 // 也就是字符串的长度，注意不包括最后的'\0'
 int	ft_len(int nbr)
 {
@@ -62,7 +60,7 @@ char	*ft_itoa(int nbr)
 
 	num = nbr;
 	len = ft_len(nbr);
-	str = malloc(sizeof(char) * (len + 1));
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
 		return (NULL);
 	str[len] = '\0';
@@ -90,18 +88,22 @@ int	main(void)
 	char	*s2;
 	char	*s3;
 	char	*s4;
+	char	*s5;
 
 	s1 = ft_itoa(123);
 	s2 = ft_itoa(-42);
 	s3 = ft_itoa(0);
 	s4 = ft_itoa(-2147483648);
+	s5 = ft_itoa(889900);
 	printf("%s\n", s1);
 	printf("%s\n", s2);
 	printf("%s\n", s3);
 	printf("%s\n", s4);
+	printf("%s\n", s5);
 	free(s1);
 	free(s2);
 	free(s3);
 	free(s4);
+	free(s5);
 	return (0);
 }
