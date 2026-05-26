@@ -27,11 +27,11 @@ int	main(int argc, char **argv)
 {
 	int	i;
 
-	// 如果参数个数不是 1 个, 就直接输出 a 和换行
+	// 如果参数的数量不是1(即0个参数或者有2个以上的参数), 就直接输出 a 和换行
 	if (argc != 2)
 	{
 		write(1, "a\n", 2);
-		return (0);
+		return (0); // 这个return是必须的，防止当0个参数时，后面的代码访问不存在的argv[1]崩溃
 	}
 
 	i = 0;
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 		if (argv[1][i] == 'a')
 		{
 			write(1, "a\n", 2);
-			return (0);
+			return (0); // 这个return必须，防止后面还有字母a的话会继续输出打印
 		}
 		i++;
 	}

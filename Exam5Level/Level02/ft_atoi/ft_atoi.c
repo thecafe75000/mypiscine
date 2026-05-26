@@ -5,11 +5,9 @@ Allowed functions: None
 --------------------------------------------------------------------------------
 Write a function that converts the string argument str to an integer (type int)
 and returns it.
-
 It works much like the standard atoi(const char *str) function, see the man.
 
 Your function must be declared as follows:
-
 int	ft_atoi(const char *str);
 */
 
@@ -47,6 +45,7 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
+// 写法2：考虑溢出情况
 int	is_overflow(long result, int sign, char c)
 {
 	if (sign == 1 && (result > 214748364 || (result == 214748364 && c > '7')))
