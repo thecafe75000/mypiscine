@@ -19,7 +19,7 @@ Your function must be declared as follows:
 char				*ft_itoa_base(int value, int base);
 */
 /*
-	按“从 0 开始写出完整程序”的方式解释这题怎么想、怎么拆、为什么这样构思
+
 	把一个 int 整数 value 转成指定进制 base 的字符串，并返回这个字符串
 	参数：
 		value 表示要转换的整数
