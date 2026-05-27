@@ -10,6 +10,7 @@ lines, or by the start/end of the string.
 
 Your function must be declared as follows:
 char		**ft_split(char *str);
+
 */
 /*
 	接收一个字符串 str，把字符串按“空白字符”切成一个个单词，然后返回一个字符串数组
@@ -235,16 +236,16 @@ int	main(void)
 			j = 0; -> j = result 数组当前要填的位置
 		为了复制单词，对字符串进行第2次从头到尾进行扫描，找到一个单词的开始位置，
 		还是要先跳过空白：
-			while (str[i] 是空白)
-				i++;
+			while (str[k] 是空白)
+				k++;
 		比如："  hi here is paris city !", 一开始跳过2个空格后，下标来到字符h，
 			h是单词的开头, 所以记录start = k, 对于第1个单词hi，start = 2，
 			因为前面2个空格占据了下标0,1，下标走到 h 的时候 k = 2
 
 		第5步：找到这个单词的结束位置
 		从 start 开始往后走，只要不是空白，就继续走：
-			while (str[i] 不是空白)
-				i++;
+			while (str[k] 不是空白)
+				k++;
 		对于第1个单词 “hi”, 下标k从2走到4，这时：
 			start = 2
 			k = 4
@@ -252,7 +253,7 @@ int	main(void)
 		所以单词范围是：
 				str[start] 到 str[k - 1]，也就是str[2] 到 str[3]
 			单词长度是：
-				i - start, 也就是 4 - 2 = 2
+				k - start, 也就是 4 - 2 = 2
 
 		第6步：复制这个单词
 		现在知道start = 2, len = 2, 说明要从原字符串 str[2] 开始，复制2个字符
