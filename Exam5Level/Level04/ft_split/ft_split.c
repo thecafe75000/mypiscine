@@ -125,7 +125,7 @@ char	**ft_split(char *str)
 		start = k;
 		while (str[k] && !is_space(str[k]))
 			k++;
-		if (k > start)
+		if ((k - start) > 0) // 如果if条件不满足，说明没有单词需要复制
 		{
 			// result[j] 负责保存每个复制出来的单词(1个单词就是一个字符串)
 			result[j] = copy_word(str, start, k - start);
@@ -250,9 +250,9 @@ int	main(void)
 			start = 2
 			k = 4
 		注意：k 不是停留在单词hi的第2个字符‘i'这里，而是停在 hi 后面的空格处
-		所以单词范围是：
+		所以原字符串里当前这个单词的范围是：
 				str[start] 到 str[k - 1]，也就是str[2] 到 str[3]
-			单词长度是：
+			当前单词长度是：
 				k - start, 也就是 4 - 2 = 2
 
 		第6步：复制这个单词
