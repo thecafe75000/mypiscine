@@ -6,7 +6,7 @@
 /*   By: hL <hL@stu.42.fr>                          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 15:11:30 by hL                #+#    #+#             */
-/*   Updated: 2026/03/27 16:28:16 by hL               ###   ########.fr       */
+/*   Updated: 2026/05/29 14:44:39 by hL               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*copy_word(char *str, char *charset)
 }
 
 // 负责总调度
-char	**ft_split(char *str, char *charset)
+char	**count_words(char *str, char *charset)
 {
 	int		i;
 	int		j;
