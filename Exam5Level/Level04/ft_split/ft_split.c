@@ -138,7 +138,7 @@ char	**ft_split(char *str)
 
 #include <stdio.h>
 
-int	main(void)
+int	main00(void)
 {
 	char	*str;
 	char	**result;
@@ -153,6 +153,24 @@ int	main(void)
 		i++;
 	}
 	printf("result[%d] = NULL\n", i);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	char	**strs;
+	int		i;
+
+	if (argc != 2)
+		return (1);
+	strs = ft_split(argv[1]);
+	i = 0;
+	while (strs != NULL && strs[i] != NULL)
+	{
+		printf("%d:%s\n", i, strs[i]);
+		i++;
+	}
+	free(strs);
 	return (0);
 }
 
