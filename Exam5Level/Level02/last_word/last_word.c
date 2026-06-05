@@ -10,8 +10,7 @@ If the number of parameters is not 1, or there are no words, display a newline.
 Example:
 $> ./last_word "FOR PONY" | cat -e
 PONY$
-$> ./last_word "this        ...       is sparta, then again, maybe    not" | cat
-	-e
+$> ./last_word "this        ...       is sparta, then again, maybe    not" | cat -e
 not$
 $> ./last_word "   " | cat -e
 $
@@ -46,21 +45,22 @@ $>
 */
 
 #include <unistd.h>
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
 	int i;
-	int end;
+	int end;// 最后一个单词的结尾
 
 	if (argc == 2)
 	{
 		i = 0;
 		while (argv[1][i])
 			i++;
-		while (i > 0 && (argv[1][i-1] == ' '|| argv[1][i] == '\t'))
+		while (i > 0 && (argv[1][i-1] == ' '|| argv[1][i-1] == '\t'))
 			i--;
 		end = i;
-		while (i > 0 && argv[1][i-1] != ' ' && argv[1][i] != '\t')
+		while (i > 0 && argv[1][i-1] != ' ' && argv[1][i-1] != '\t')
 			i--;
 		while (i < end)
 		{

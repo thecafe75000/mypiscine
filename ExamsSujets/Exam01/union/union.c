@@ -50,7 +50,7 @@ $>
 #include <unistd.h>
 
 // 参数limit的意思：只检查字符串 str 从下标 0 到下标 limit - 1 的范围
-int	already_seen(char *str, char c, int limit)
+int	is_already_seen(char *str, char c, int limit)
 {
 	int	i;
 
@@ -77,14 +77,14 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (argv[1][i])
 	{
-		if (!already_seen(argv[1], argv[1][i], i))
+		if (!is_already_seen(argv[1], argv[1][i], i))
 			write(1, &argv[1][i], 1);
 		i++;
 	}
 	j = 0;
 	while (argv[2][j])
 	{
-		if (!already_seen(argv[1], argv[2][j], i) && !already_seen(argv[2], argv[2][j], j))
+		if (!is_already_seen(argv[1], argv[2][j], i) && !is_already_seen(argv[2], argv[2][j], j))
 			write(1, &argv[2][j], 1);
 		j++;
 	}
