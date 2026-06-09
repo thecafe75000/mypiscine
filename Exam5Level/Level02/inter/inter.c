@@ -4,8 +4,7 @@ Expected files   : inter.c
 Allowed functions: write
 --------------------------------------------------------------------------------
 Write a program that takes two strings and displays, without doubles,
-	the characters
-that appear in both strings, in the order they appear in the first one.
+the characters that appear in both strings, in the order they appear in the first one.
 The display will be followed by a \n.
 If the number of arguments is not 2, the program displays \n.
 
@@ -28,7 +27,9 @@ $
 
 	当前字符 argv[1][i] 只有在满足以下条件时输出：
 		1. 它在 argv[2] 中；
-		2. 它在 argv[1] 的 0 ~ i - 1 范围内没有出现过
+		2. 它在 argv[1] 的 0 ~ i - 1 范围内没有输出过
+	即从第一个字符串左到右看，遇到一个也存在于第二个字符串里的字符，就输出；
+		但是同一个字符只输出第一次出现的那个，也就是重复字符只输出一次
 */
 
 #include <unistd.h>
@@ -72,7 +73,8 @@ int	main(int argc, char **argv)
 		i = 0;
 		while (argv[1][i])
 		{
-			if (check_str(argv[2], argv[1][i]) && !show_already(argv[1], argv[1][i], i))
+			if (check_str(argv[2], argv[1][i]) && !show_already(argv[1],
+					argv[1][i], i))
 				write(1, &argv[1][i], 1);
 			i++;
 		}
