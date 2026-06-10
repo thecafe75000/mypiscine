@@ -9,9 +9,10 @@ It works much like the standard atoi(const char *str) function, see the man.
 
 Your function must be declared as follows:
 int	ft_atoi(const char *str);
-*/
 
-/*
+	题目要求：
+	把一个字符串里的十进制文本解析成 int 整数
+
 	标准 atoi 本身不处理int取值范围的溢出问题
 	1. 跳过开头的空白字符 (开头的空白字符可以有多个)
 	2. 判断是否有一个正负号 (正负号最多只能有一个)
