@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 	{
 		if (argv[1][i] == 'a')
 		{
-			write(1, "a\n", 2);
+			write(1, "a", 1);
 			return (0); // 这个return必须有，防止后面还有字母a的话会继续输出打印
 		}
 		i++;
