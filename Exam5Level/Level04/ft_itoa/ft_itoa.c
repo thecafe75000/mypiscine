@@ -71,6 +71,7 @@ char	*ft_itoa(int nbr)
 		str[0] = '-';
 		num = -num;
 	}
+	// 从字符串末尾往前填数字
 	while (num > 0)
 	{
 		str[len - 1] = (num % 10) + '0';

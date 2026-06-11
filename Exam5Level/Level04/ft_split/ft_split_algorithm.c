@@ -97,7 +97,8 @@ char	**ft_split(char *str)
 	if (!str)
 		return (NULL);
 	wordsnum = count_words(str);
-	result = malloc(sizeof(char *) * (wordsnum + 1));
+	// 创建外层数组：存放 char * 指针的数组
+	result = malloc(sizeof(char *) * (wordsnum + 1)); 
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -112,6 +113,7 @@ char	**ft_split(char *str)
 		{
 			start = i;
 			word_len = get_word_len(str, i);
+			// 创建内层数组：存放每个 char * 指向的真正单词内容
 			result[j] = malloc(sizeof(char) * (word_len + 1));
 			if (!result[j])
 				return (NULL);
