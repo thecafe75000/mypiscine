@@ -33,6 +33,29 @@
 		错误3：忘记 NULL 结束，result[word_count] = NULL; 是必须的，否则后续遍历会爆炸
 		错误4：内存泄漏（重点），如果malloc result[i] 失败，必须释放之前所有已分配的 result[i]
 
+	结构是：
+	result
+		|
+		v
+	+-----------+
+	| result[0] | ---> 'h' 'i' '\0'   result[0] = "hi"
+	+-----------+
+	| result[1] | ---> 'h' 'e' 'r' 'e' '\0'   result[1] = "here";
+	+-----------+
+	| result[2] | ---> NULL  result[2] = NULL;
+	+-----------+
+	result        // char **，字符串数组的起始地址
+	result[0]     // char *，第一个字符串 "hi"
+	result[0][0]  // char，第一个字符串的第一个字符 'h'
+	result[0][1]  // char，第一个字符串的第二个字符 'i'
+	result[1]     // char *，第二个字符串 "here"
+	result[1][2]  // char，第二个字符串的第三个字符 'r'
+
+	总结:
+		char **result  = 字符串数组, 数组每个元素都是一个字符串
+		result[j]      = 一个字符串(字符数组)，数组每个元素都是一个字符
+		result[j][k]   = 一个字符
+
 */
 #include <stdlib.h>
 
@@ -98,7 +121,7 @@ char	**ft_split(char *str)
 		return (NULL);
 	wordsnum = count_words(str);
 	// 创建外层数组：存放 char * 指针的数组
-	result = malloc(sizeof(char *) * (wordsnum + 1)); 
+	result = malloc(sizeof(char *) * (wordsnum + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
