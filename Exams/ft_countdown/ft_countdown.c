@@ -3,7 +3,6 @@ Assignment name  : ft_countdown
 Expected files   : ft_countdown.c
 Allowed functions: write
 --------------------------------------------------------------------------------
-
 Write a program that displays all digits in descending order, followed by a
 newline.
 
@@ -15,8 +14,10 @@ $>
 
 #include <unistd.h>
 
-int	main()
+int main(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	write(1, "9876543210\n", 11);
 	return (0);
 }
