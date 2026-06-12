@@ -22,10 +22,27 @@ z$
 
 #include <unistd.h>
 
-/*  版本1
-int main(int argc, char **argv)
+// 版本1
+int	main(int argc, char **argv)
 {
-	int i;
+	(void)argc;
+	(void)argv;
+	write(1, "z\n", 2);
+	return (0);
+}
+
+/*
+// 版本2
+int	main(void)
+{
+	write(1, "z\n", 2);
+	return (0);
+}
+
+// 版本3 不推荐 太繁琐
+int	main(int argc, char **argv)
+{
+	int	i;
 
 	if (argc != 2)
 	{
@@ -35,27 +52,15 @@ int main(int argc, char **argv)
 	i = 0;
 	while (argv[1][i])
 	{
-		if(argv[1][i] == 'z')
+		if (argv[1][i] == 'z')
 		{
-			write(1, "z\n", 2);
+			write(1, &argv[1][i], 1);
+			write(1, "\n", 1);
 			return (0);
 		}
-		else
-		{
-			write(1, "z\n", 2);
-			return (0);
-		}
+		i++;
 	}
-	write(1, "\n", 1);
-	return (0);
-}
-*/
-
-// 版本2
-int main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
 	write(1, "z\n", 2);
 	return (0);
 }
+*/
