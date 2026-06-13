@@ -3,22 +3,20 @@ Assignment name  : ft_putstr
 Expected files   : ft_putstr.c
 Allowed functions: write
 --------------------------------------------------------------------------------
-
 Write a function that displays a string on the standard output.
 
 The pointer passed to the function contains the address of the string's first
 character.
 
 Your function must be declared as follows:
-
 void	ft_putstr(char *str);
 */
 
 #include <unistd.h>
 
-void	ft_putstr(char *str)
+void ft_putstr(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -30,15 +28,12 @@ void	ft_putstr(char *str)
 
 #include <stdio.h>
 
-int	main(void)
+int main()
 {
-	char	*str;
-	char	str2[] = "cde789!*22";
-
-	str = "123abc*!99";
+	char str[] = "abcd1234!";
+	char *str2 = "67890opsty*";
 	ft_putstr(str);
 	printf("\n");
 	ft_putstr(str2);
-	printf("\n");
 	return (0);
 }

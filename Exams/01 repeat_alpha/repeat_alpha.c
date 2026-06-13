@@ -14,7 +14,6 @@ Case remains unchanged.
 If the number of arguments is not 1, just display a newline.
 
 Examples:
-
 $>./repeat_alpha "abc"
 abbccc
 $>./repeat_alpha "Alex." | cat -e
@@ -27,13 +26,50 @@ $>
 $>./repeat_alpha "" | cat -e
 $
 $>
+		c - 'A' + 1 或 c- 'a' + 1 是把字母转换成它在字母表里的序号
+		利用 'a' 到 'z' 在ascii表里的数值，算出传入的字母char c 相对 'a' 的偏移量，再加 1，得到在字母表里的序号
+		序号 = 当前字母 - 'a' + 1 即符合题目要求，字母序号多少，则打印输出字母的次数等于序号
 */
 
 #include <unistd.h>
 
-// c - 'A' + 1 把字母转换成它在字母表里的序号
-// 利用 'a' 到 'z' 在ascii表里的数值，算出 ch 相对 'a' 的偏移量，再加 1，得到在字母表里的序号
-// 序号 = 当前字母 - 'a' + 1 即符合题目要求，字母序号多少，则打印输出字母的次数等于序号
+int	main(int argc, char **argv)
+{
+	int	i;
+	int	print_times;
+
+	if (argc != 2)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
+	i = 0;
+	print_times = 0;
+	while (argv[1][i])
+	{
+		if (argv[1][i] >= 'a' && argv[1][i] <= 'z')
+			print_times = argv[1][i] - 'a' + 1;
+		else if (argv[1][i] >= 'A' && argv[1][i] <= 'Z')
+			print_times = argv[1][i] - 'A' + 1;
+		else
+			print_times = 1;
+		while (print_times > 0)
+		{
+			write(1, &argv[1][i], 1);
+			print_times--;
+		}
+		i++;
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+
+/*
+	版本2 封装函数
+		c - 'A' + 1 或 c- 'a' + 1 是把字母转换成它在字母表里的序号
+		利用 'a' 到 'z' 在ascii表里的数值，算出传入的字母char c 相对 'a' 的偏移量，再加 1，得到在字母表里的序号
+		序号 = 当前字母 - 'a' + 1 即符合题目要求，字母序号多少，则打印输出字母的次数等于序号
+
 int	repeattimes(char c)
 {
 	int	times;
@@ -69,3 +105,4 @@ int	main(int argc, char **argv)
 	write(1, "\n", 1);
 	return (0);
 }
+*/

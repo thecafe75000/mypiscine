@@ -7,15 +7,16 @@ Reproduce the behavior of the function strcpy (man strcpy).
 
 Your function must be declared as follows:
 char	*ft_strcpy(char *s1, char *s2);
+
+	把 s2 字符串的内容复制到 s1 里
+	包括最后那个字符串结束符 '\0' 也会一起复制
 */
 
 char	*ft_strcpy(char *s1, char *s2)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	if (s2[i] == '\0')
-		return (0);
 	while (s2[i])
 	{
 		s1[i] = s2[i];
@@ -26,14 +27,17 @@ char	*ft_strcpy(char *s1, char *s2)
 }
 
 #include <stdio.h>
+#include <string.h>
 
-int	main(void)
+int main()
 {
-	char	s1[30];
-	char	s2[] = "123abc*!CD";
-
-	ft_strcpy(s1, s2);
-	printf("%s\n", s1);
-	printf("%s\n", ft_strcpy(s1, s2));
+	char dest[20];
+	char src[] = "1234567890abcde!*";
+	if (strlen(src) + 1 > sizeof(dest))
+	{
+		printf("error");
+		return (0);
+	}
+	printf("%s\n", ft_strcpy(dest, src));
 	return (0);
 }

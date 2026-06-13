@@ -3,13 +3,12 @@ Assignment name  : ft_swap
 Expected files   : ft_swap.c
 Allowed functions:
 --------------------------------------------------------------------------------
-
 Write a function that swaps the contents of two integers the adresses of which
 are passed as parameters.
 
 Your function must be declared as follows:
-
 void	ft_swap(int *a, int *b);
+
 */
 
 void ft_swap(int *a, int *b)
@@ -23,12 +22,12 @@ void ft_swap(int *a, int *b)
 
 #include <stdio.h>
 
-int	main()
+int main()
 {
 	int x = 10;
-	int y = 900;
-	printf("before x = %d, y = %d\n", x, y);
+	int y = 800;
+	printf("before x = %d, y = %d \n", x, y);
 	ft_swap(&x, &y);
-	printf("after x = %d, y = %d\n", x, y);
+	printf("after x = %d, y = %d \n", x, y);
 	return (0);
 }

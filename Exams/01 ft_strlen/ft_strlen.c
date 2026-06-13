@@ -9,27 +9,28 @@ Your function must be declared as follows:
 int	ft_strlen(char *str);
 */
 
-int	ft_strlen(char *str)
+int ft_strlen(char *str)
 {
-	int	i;
+	int len;
 
-	i = 0;
-	if (str[i] == '\0')
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
 #include <stdio.h>
 
-int	main(void)
+int main()
 {
-	char	str[] = "1234567890*!abc";
-	char	*str1;
-
-	str1 = "abcdefg123*@#+9988";
-	printf("str= %d\n", ft_strlen(str));
-	printf("str1= %d\n", ft_strlen(str1));
+	char str[] = "1234567890abcdef !*.";
+	printf("length str = %d\n", ft_strlen(str));
+	char *str2 = NULL;
+	if (!str2)
+	{
+		printf("error");
+		return (0);
+	}
+	printf("length str2 = %d\n", ft_strlen(str2));
 	return (0);
 }
