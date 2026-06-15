@@ -9,8 +9,7 @@ otherwise it returns 0.
 
 Your function must be declared as follows:
 int	is_power_of_2(unsigned int n);
-*/
-/*
+
 	判断一个 unsigned int 数字 n 是不是 2 的幂
 		如果 n 是 2 的幂，返回 1
 		如果 n 不是 2 的幂，返回 0
@@ -19,6 +18,9 @@ int	is_power_of_2(unsigned int n);
 		即 1, 2, 4, 8, 16, 32, 64, 128, ...
 	注意：1 也是 2 的幂，因为：2^0 = 1, 但0 不是 2 的幂
 	如果一个数真的是 2 的幂，那么它应该可以一直被 2 整除，直到最后变成 1
+
+	核心代码：
+	n % 2 == 0 表示n 能被 2 整除，即n是偶数
 */
 
 int	is_power_of_2(unsigned int n)
@@ -31,15 +33,4 @@ int	is_power_of_2(unsigned int n)
 		return (1);
 	else
 		return (0);
-}
-
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%d\n", is_power_of_2(8));
-	printf("%d\n", is_power_of_2(9));
-	printf("%d\n", is_power_of_2(0));
-	printf("%d\n", is_power_of_2(1));
-	return (0);
 }

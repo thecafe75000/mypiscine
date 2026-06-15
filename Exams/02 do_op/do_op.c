@@ -9,8 +9,8 @@ Write a program that takes three strings:
 - The second one is an arithmetic operator chosen from: + - * / %
 
 The program must display the result of the requested arithmetic operation,
-followed by a newline. If the number of parameters is not 3, the program
-just displays a newline.
+followed by a newline.
+If the number of parameters is not 3, the program just displays a newline.
 
 You can assume the string have no mistakes or extraneous characters. Negative
 numbers, in input or output, will have one and only one leading '-'. The
@@ -26,8 +26,7 @@ $> ./do_op "1" "+" "-43" | cat -e
 -42$
 $> ./do_op | cat -e
 $
-*/
-/*
+
 	从命令行接收两个整数和一个运算符，然后输出计算结果
 	程序运行形式：
 	./do_op 数字1 运算符 数字2
@@ -45,35 +44,39 @@ $
 
 	可以用 atoi() 把字符串转成整数，用 printf() 输出结果
 */
-#include <stdio.h>
+
 #include <stdlib.h>
+#include <stdio.h>
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	int		x;
-	int		y;
-	char	operator;
-	int		result;
+	int x;
+	int y;
+	char operator;
+	int result;
 
-	result = 0;
-	if (argc == 4)
+	if (argc != 4)
 	{
-		x = atoi(argv[1]);
-		y = atoi(argv[3]);
-		operator= argv[2][0];
-		if ((operator== '/' || operator == '%') && y == 0)
-		{
-			printf("NOT take 0 in case of division and module operation\n");
-			return (0);
-		}
-		else if (operator== '+') result = x + y;
-		else if (operator== '-') result = x - y;
-		else if (operator== '*') result = x * y;
-		else if (operator== '/') result = x / y;
-		else if (operator== '%') result = x % y;
-		printf("%d\n", result);
-	}
-	else
 		printf("\n");
+		return (0);
+	}
+	x = atoi(argv[1]);
+	y = atoi(argv[3]);
+	operator = argv[2][0];
+	result = 0;
+	if ((operator == '/' || operator == '%') && y == 0)
+	{
+		printf("\n");
+		return (0);
+	}
+	else if (operator == '+')
+		result = x + y;
+	else if (operator == '-')
+		result = x - y;
+	else if (operator == '*')
+		result = x * y;
+	else if (operator == '/')
+		result = x / y;
+	printf("%d\n", result);
 	return (0);
 }

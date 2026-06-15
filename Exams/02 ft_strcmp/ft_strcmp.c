@@ -7,8 +7,7 @@ Reproduce the behavior of the function strcmp (man strcmp).
 
 Your function must be declared as follows:
 int	ft_strcmp(char *s1, char *s2);
-*/
-/*
+
 	要求实现一个函数，其行为和标准库函数 strcmp 一样
 	接收2个字符串，从第1个字符开始逐个比较：
 		如果当前字符相同，就继续比较下一个字符
@@ -22,12 +21,13 @@ int	ft_strcmp(char *s1, char *s2);
 	不能用双重循环把 s1 的字符拿去和 s2 的很多位置比较
 	strcmp 是逐位同步比较，不是嵌套循环查找相同字符
 */
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	while (s1[i] == s2[i] && s1[i])
+	 while (s1[i] && (s1[i] == s2[i]))
 		i++;
 	return (s1[i] - s2[i]);
 }

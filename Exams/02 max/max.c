@@ -10,8 +10,7 @@ The first parameter is an array of int, the second is the number of elements in
 the array.
 The function returns the largest number found in the array.
 If the array is empty, the function returns 0.
-*/
-/*
+
 	max函数接收一个整数数组 tab 和数组长度 len，返回数组中的最大值
 	要求：
 		如果 len == 0，返回 0
@@ -19,10 +18,10 @@ If the array is empty, the function returns 0.
 		如果数组里全是负数，也要返回其中最大的那个负数，不是返回 0
 */
 
-int	max(int *tab, unsigned int len)
+int max(int *tab, unsigned int len)
 {
-	unsigned	i;
-	int			max;
+	unsigned i;
+	int max;
 
 	i = 0;
 	max = tab[0];
@@ -39,12 +38,10 @@ int	max(int *tab, unsigned int len)
 
 #include <stdio.h>
 
-int	main(void)
+int main()
 {
-	int	arr[] = {-9, 0, 1, 8, 4, 66, 25, 10};
-	int	arr1[] = {-9, -22, -1, -8};
+	int arr[] = {-3, -9, 0, -6, 18, 3, 9};
+	printf("max = %d\n", max(arr, 7));
 
-	printf("arr max = %d\n", max(arr, 8));
-	printf("arr1 max = %d\n", max(arr1, 4));
 	return (0);
 }

@@ -17,15 +17,13 @@ $>./wdmatch "faya" "fgvvfdxcacpolhyghbreda" | cat -e
 faya$
 $>./wdmatch "faya" "fgvvfdxcacpolhyghbred" | cat -e
 $
-$>./wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat
-	-e
+$>./wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat -e
 quarante deux$
 $>./wdmatch "error" rrerrrfiiljdfxjyuifrrvcoojh | cat -e
 $
 $>./wdmatch | cat -e
 $
-*/
-/*
+
 	判断 str1 能不能用 str2 中的字符按顺序拼出来
 	注意：
 	不是要求字符连续出现，而是要求顺序一致
@@ -38,24 +36,26 @@ $
 
 #include <unistd.h>
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
+	if (argc != 3)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
 	i = 0;
 	j = 0;
-	if (argc == 3)
+	while (argv[1][i] && argv[2][j])
 	{
-		while (argv[1][i] && argv[2][j])
-		{
-			if (argv[1][i] == argv[2][j])
-				i++;
-			j++;
-		}
-		if (argv[1][i] == '\0')
-			write(1, argv[1], i);
+		if (argv[1][i] == argv[2][j])
+			i++;
+		j++;
 	}
+	if (argv[1][i] == '\0')
+		write(1, argv[1], i);
 	write(1, "\n", 1);
 	return (0);
 }
