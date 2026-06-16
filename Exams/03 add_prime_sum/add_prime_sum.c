@@ -23,12 +23,97 @@ $>
 	否则：从 2 遍历到 n, 如果当前数字是质数,加到 sum 里面
 	输出 sum
 
-	合法的参数只包含数字字符，并且数值大于 0
-	需要自己写一个函数，功能和atoi函数一样，把字符串转成整数，同时检查是否合法
-
 	质数：大于 1，并且只能被 1 和它自己整除的整数
 	注意：
 		0 不是质数
 		1 不是质数
 		2 是最小的质数
+		所有质数中，除了 2 以外，其余全部都是奇数
 */
+
+#include <unistd.h>
+
+// 把参数字符数组转成int数字，方便后面的计算和用于判断数字是否是质数
+int	ft_atoi(char *str)
+{
+	int	i;
+	int	sign;
+	int	result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
+}
+
+// 判断数字是否是质数
+int	is_prime(int n)
+{
+	int	i;
+
+	i = 2;
+	if (n < 2)
+		return (0);
+	while (i < n)
+	{
+		if (n % i == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// 打印输出数字
+// 先递归打印高位，再打印低位, 也就是“从左到右输出数字”
+void	putnbr(int n)
+{
+	char	c;
+
+	if (n >= 10)
+		putnbr(n / 10);
+	c = (n % 10) + '0';
+	write(1, &c, 1);
+}
+
+int	main(int argc, char **argv)
+{
+	int	i;
+	int	num;
+	int	sum;
+
+	if (argc != 2)
+	{
+		write(1, "0\n", 2);
+		return (0);
+	}
+	num = ft_atoi(argv[1]);
+	if (num <= 0)
+	{
+		write(1, "0\n", 2);
+		return (0);
+	}
+	i = 2;
+	sum = 0;
+	while (i <= num)
+	{
+		if (is_prime(i))
+			sum += i;
+		i++;
+	}
+	putnbr(sum);
+	write(1, "\n", 1);
+	return (0);
+}

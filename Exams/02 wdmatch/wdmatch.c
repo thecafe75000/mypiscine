@@ -17,7 +17,8 @@ $>./wdmatch "faya" "fgvvfdxcacpolhyghbreda" | cat -e
 faya$
 $>./wdmatch "faya" "fgvvfdxcacpolhyghbred" | cat -e
 $
-$>./wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat -e
+$>./wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat
+	-e
 quarante deux$
 $>./wdmatch "error" rrerrrfiiljdfxjyuifrrvcoojh | cat -e
 $
@@ -36,10 +37,10 @@ $
 
 #include <unistd.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	if (argc != 3)
 	{
@@ -55,7 +56,22 @@ int main(int argc, char **argv)
 		j++;
 	}
 	if (argv[1][i] == '\0')
-		write(1, argv[1], i);
+		write(1, argv[1], i); // 用一次 write 输出整个字符串
 	write(1, "\n", 1);
 	return (0);
 }
+/*
+	if (argv[1][i] == '\0')
+		write(1, argv[1], i)
+
+	这2行代码还可以写成下面这种版本：循环输出每个字符
+	if (argv[1][i] == '\0')
+	{
+		i = 0;
+		while (argv[1][i])
+		{
+			write(1, &argv[1][i], 1);
+			i++;
+		}
+	}
+*/
