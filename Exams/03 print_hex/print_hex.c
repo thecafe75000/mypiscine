@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	result = 0;
 	base = "0123456789abcdef";
-	// 把字符串转换为int整数
+	// 把数字字符串转换为int整数
 	while (argv[1][i] >= '0' && argv[1][i] <= '9')
 	{
 		result = result * 10 + (argv[1][i] - '0');
