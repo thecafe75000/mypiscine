@@ -7,7 +7,8 @@ Write a function called ft_list_remove_if that removes from the
 passed list any element the data of which is "equal" to the reference data.
 
 It will be declared as follows :
-void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+void	ft_list_remove_if(t_list **begin_list, void *data_ref,
+						int (*cmp)());
 
 cmp takes two void* and returns 0 when both parameters are equal.
 
@@ -19,8 +20,7 @@ typedef struct      s_list
 	void			*data;
 }					t_list;
 $>
-*/
-/*
+
 	写一个函数用来从链表中删除所有符合条件的节点
 	函数要做的事是：遍历整个链表，如果某个节点的 data 和 data_ref 被认为“相等”，
 	就把这个节点从链表中删除，并用 free 释放这个节点本身
@@ -56,10 +56,10 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(void *, v
 		ft_list_remove_if(&(*begin_list)->next, data_ref, cmp);
 }
 
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 
-// 创建新节点
+// 创造新节点
 t_list	*new_node(void *data)
 {
 	t_list	*node;
@@ -73,7 +73,6 @@ t_list	*new_node(void *data)
 }
 
 // 比较字符串
-// strcmp是来自string.h的C库函数
 int	cmp_str(void *a, void *b)
 {
 	return (strcmp((char *)a, (char *)b));
@@ -88,6 +87,7 @@ void	print_list(t_list *head)
 		head = head->next;
 	}
 }
+
 int	main(void)
 {
 	t_list *head; // head 不是节点本身，它是指向第一个节点的指针
