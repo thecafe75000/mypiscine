@@ -24,19 +24,20 @@ char	*ft_itoa(int nbr);
 			-2147483648 也要能正确转换
 
 	核心构思：
-		先算这个整数变成字符串需要几个字符。
+		先算这个整数变成字符串需要几个字符, 即字符串长度
 		用 malloc 申请 长度 + 1 的空间。
-		最后一位放 '\0'。
-		如果是负数，先放 '-'，再把数字转成正数。
-		用 % 10 取最后一位，用 / 10 去掉最后一位。
-		因为取出来是反的，所以从字符串末尾往前填
+		最后一位放 '\0'，str[len] = '\0'
+		当输入的参数只有0时，要专门处理这个0，str[0] = '0'
+		如果是负数，先放 '-'，再把数字转成正数
+		用 % 10 取最后一位，用 / 10 去掉最后一位
+		因为取出来是反的，所以从字符串末尾往前填, 即从后往前填数字
 */
 
 #include <stdlib.h>
 
 // 计算整数 nbr 转成字符串以后，需要多少个可见字符
 // 也就是字符串的长度，注意不包括最后的'\0'
-int	ft_length(int nbr)
+int	get_length(int nbr)
 {
 	int	len;
 
@@ -53,4 +54,39 @@ int	ft_length(int nbr)
 
 char	*ft_itoa(int nbr)
 {
+	int		len;
+	char	*str;
+	long	num;
+
+	len = get_length(nbr);
+	num = nbr;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	if (num == 0)
+		str[0] = '0';
+	if (num < 0)
+	{
+		str[0] = '-';
+		num = -num;
+	}
+	// 从字符串末尾往前填数字
+	while (num > 0)
+	{
+		str[len - 1] = (num % 10) + '0';
+		num = num / 10;
+		len--;
+	}
+	return (str);
+}
+
+#include <stdio.h>
+
+int main()
+{
+	char *str = ft_itoa(-2147483648);
+	printf("%s\n", str);
+	free(str);
+	return (0);
 }
