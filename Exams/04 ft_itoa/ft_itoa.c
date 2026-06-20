@@ -63,7 +63,7 @@ char	*ft_itoa(int nbr)
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	str[len] = '\0';
+	str[len] = '\0'; // 先放字符串结束符
 	if (num == 0)
 		str[0] = '0';
 	if (num < 0)
@@ -71,11 +71,10 @@ char	*ft_itoa(int nbr)
 		str[0] = '-';
 		num = -num;
 	}
-	// 从字符串末尾往前填数字
 	while (num > 0)
 	{
-		str[len - 1] = (num % 10) + '0';
-		num = num / 10;
+		str[len - 1] = (num % 10) + '0'; // 从字符串末尾往前填, 获取最后一位数字
+		num = num / 10;                  // 去掉最后一位数字
 		len--;
 	}
 	return (str);
@@ -83,9 +82,11 @@ char	*ft_itoa(int nbr)
 
 #include <stdio.h>
 
-int main()
+int	main(void)
 {
-	char *str = ft_itoa(-2147483648);
+	char	*str;
+
+	str = ft_itoa(-2147483648);
 	printf("%s\n", str);
 	free(str);
 	return (0);
