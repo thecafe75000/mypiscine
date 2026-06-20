@@ -193,12 +193,12 @@ char	**ft_split(char *str)
 
 #include <stdio.h>
 
-int	main00(void)
+int	main(void)
 {
 	char	**result;
 	int		i;
 
-	result = ft_split("123456 hello 99 ");
+	result = ft_split("123456 hello 99  great42");
 	i = 0;
 	while (result[i])
 	{
@@ -215,7 +215,7 @@ int	main00(void)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	main00(int argc, char **argv)
 {
 	char	**strs;
 	int		i;
