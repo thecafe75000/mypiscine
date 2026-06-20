@@ -16,7 +16,7 @@ If base is 10 and value is negative, the resulting string is preceded with a
 minus sign (-). With any other base, value is always considered unsigned.
 
 Your function must be declared as follows:
-char				*ft_itoa_base(int value, int base);
+char	*ft_itoa_base(int value, int base);
 
 	把一个 int 整数 value 转成指定进制 base 的字符串，并返回这个字符串
 	参数：

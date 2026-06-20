@@ -11,8 +11,6 @@ members, in ascending order.
 Doubles must be preserved.
 Input is always coherent.
 
-*/
-/*
 	写一个函数，用来把一个 int 数组原地升序排序
 	核心就是：比较数组里的数字，如果前面的比后面的大，就交换，最后整个数组变成升序
 
@@ -60,12 +58,12 @@ void	sort_int_tab(int *tab, unsigned int size)
 
 int	main(void)
 {
-	int	i;
-	int	tab[] = {-1, -6, 9, 2, 6, 2, 18, 17};
+	int i;
+	int tab[] = { 0, -1, -6, 9, 2, 6, 2, 18, 17 };
 
 	i = 0;
-	sort_int_tab(tab, 8);
-	while (i < 8)
+	sort_int_tab(tab, 9);
+	while (i < 9)
 	{
 		printf("%d ", tab[i]);
 		i++;

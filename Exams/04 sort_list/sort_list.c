@@ -24,8 +24,7 @@ int	ascending(int a, int b)
 {
 	return (a <= b);
 }
-*/
-/*
+
 	实现题目要求的函数，这个函数的作用：
 		把一个链表按指定规则排序，然后返回排序后链表的第一个节点
 		lst 是链表头指针
@@ -133,7 +132,7 @@ void	free_list(t_list *lst)
 
 int	main(void)
 {
-	t_list	*lst;
+	t_list *lst;
 
 	lst = NULL;
 	push_back(&lst, 4);
