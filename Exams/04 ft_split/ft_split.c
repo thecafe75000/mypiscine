@@ -104,7 +104,6 @@ int	get_words_num(char *str)
 	int	i;
 	int	is_in_word;
 
-
 	count = 0;
 	i = 0;
 	// 标记你“现在在不在单词里”, `0` = 不在单词里（空格区）,`1` = 在单词里（单词内部）
