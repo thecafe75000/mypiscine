@@ -97,12 +97,13 @@ int	is_space(char c)
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
-// 统计字符串里有几个单词，即有几个子串
+// 统计字符串里有几个单词，即有几个子串，用于malloc申请内存
 int	get_words_num(char *str)
 {
 	int	count;
 	int	i;
 	int	is_in_word;
+
 
 	count = 0;
 	i = 0;
@@ -125,7 +126,8 @@ int	get_words_num(char *str)
 	return (count); // 返回“总共进入单词区域的次数”, 也就是单词数量
 } // 一定要记住:count++ 只发生在这一瞬间：空格 → 非空格, 不是数字符，也不是数空格，而是数“进入状态的次数”
 
-// 获取单个单词的长度
+
+// 获取单个单词的长度, 用于malloc申请内存
 // 第2个参数i是单词的起始位置(由外部传进来的起始位置)，因为字符串里的单词是从任意位置开始
 int	get_word_length(char *str, int i)
 {
@@ -154,7 +156,7 @@ char	**ft_split(char *str)
 		return (NULL);
 	word_num = get_words_num(str);
 	// 创建外层数组：存放 char * 指针的数组
-	result = malloc(sizeof(char) * (word_num + 1));
+	result = malloc(sizeof(char *) * (word_num + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -170,7 +172,7 @@ char	**ft_split(char *str)
 			start = i;
 			word_len = get_word_length(str, i);
 			// 创建内层数组：存放每个 char * 指向的真正单词内容
-			result[j] = malloc(sizeof(char *) * (word_len + 1));
+			result[j] = malloc(sizeof(char ) * (word_len + 1));
 			if (!result[j])
 				return (NULL);
 			k = 0;
