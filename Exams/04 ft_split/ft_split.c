@@ -106,33 +106,32 @@ int	get_words_num(char *str)
 
 	count = 0;
 	i = 0;
+	// 标记你“现在在不在单词里”, `0` = 不在单词里（空格区）,`1` = 在单词里（单词内部）
 	is_in_word = 0;
 	while (str[i])
 	{
-		// 当前扫描状态在单词内部，但当前字符是分隔符,说明扫描了一个完整的单词
-		// 扫描一个单词结束时，单词的数量就可以计数
-		if (is_in_word && is_space(str[i]))
+		// 单词数量 = 字符串中从 OUT（空白区）进入 IN（单词区）的次数
+		// 进入单词区域几次，就有几个单词
+		// 如果当前字符不是空格，而且你“之前不在单词里”，那么发现新单词
+		if (!is_in_word && !is_space(str[i]))
 		{
 			count++;
-			is_in_word = 0;
-		}
-		else if (!is_in_word && !is_space(str[i])) // 开始一个新单词
 			is_in_word = 1;
+		}
+		else if (is_space(str[i])) // 如果当前是空格，说明单词结束了
+			is_in_word = 0;        // 标记“我已经离开单词区域了”
 		i++;
 	}
-	if (is_in_word) // 处理字符串结尾, 最后一个单词扫描完要计数
-		count++;
-	return (count);
-}
-
+	return (count); // 返回“总共进入单词区域的次数”, 也就是单词数量
+} // 一定要记住:count++ 只发生在这一瞬间：空格 → 非空格, 不是数字符，也不是数空格，而是数“进入状态的次数”
 // 获取单个单词的长度
 // 第2个参数i是单词的起始位置(由外部传进来的起始位置)，因为字符串里的单词是从任意位置开始
 int	get_word_length(char *str, int i)
 {
-	int	len;
+	int len;
 
 	len = 0;
-	while (str[i])
+	while (str[i] && !is_space(str[i]))
 	{
 		i++;
 		len++;
@@ -162,14 +161,15 @@ char	**ft_split(char *str)
 	// 开始扫描整个字符串
 	while (str[i]) // 这个str[i]的作用是先保证没到字符串结尾，再做后续判断
 	{
-		while (str[i] && is_space(str[i])) // 这个str[i]的作用是只有当前字符存在时，才去判断它是不是空白字符
+		while (str[i] && is_space(str[i]))
+			// 这个str[i]的作用是只有当前字符存在时，才去判断它是不是空白字符
 			i++;
 		if (str[i]) // 说明字符串还没走到'\0', 开始扫描单词
 		{
 			start = i;
 			word_len = get_word_length(str, i);
 			// 创建内层数组：存放每个 char * 指向的真正单词内容
-			result[j] = malloc(sizeof(char) * (word_len + 1));
+			result[j] = malloc(sizeof(char *) * (word_len + 1));
 			if (!result[j])
 				return (NULL);
 			k = 0;
@@ -190,21 +190,27 @@ char	**ft_split(char *str)
 
 #include <stdio.h>
 
-//int	main00(void)
-//{
-//	char	**result;
-//	int		i;
+int	main00(void)
+{
+	char	**result;
+	int		i;
 
-//	result = ft_split("123456  hello  99 ");
-//	i = 0;
-//	while (result[i])
-//	{
-//		printf("%s ", result[i]);
-//		i++;
-//	}
-//	free(result);
-//	return (0);
-//}
+	result = ft_split("123456 hello 99 ");
+	i = 0;
+	while (result[i])
+	{
+		printf("result[%d] = %s\n", i, result[i]);
+		i++;
+	}
+	i = 0;
+	while (result[i])
+	{
+		free(result[i]);
+		i++;
+	}
+	free(result);
+	return (0);
+}
 
 int	main(int argc, char **argv)
 {
@@ -217,10 +223,18 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	strs = ft_split(argv[1]);
+	if (!strs)
+		return (1);
 	i = 0;
-	while (strs != NULL && strs[i] != NULL)
+	while (strs[i])
 	{
 		printf("%d:%s\n", i, strs[i]);
+		i++;
+	}
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
 		i++;
 	}
 	free(strs);
