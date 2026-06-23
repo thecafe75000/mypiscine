@@ -4,8 +4,7 @@ Expected files   : inter.c
 Allowed functions: write
 --------------------------------------------------------------------------------
 Write a program that takes two strings and displays, without doubles,
-the characters that appear in both strings,
-	in the order they appear in the first one.
+the characters that appear in both strings, in the order they appear in the first one.
 The display will be followed by a \n.
 If the number of arguments is not 2, the program displays \n.
 
@@ -30,6 +29,13 @@ $
 		2. 它在 argv[1] 的 0 ~ i - 1 范围内没有输出过
 	即从第一个字符串左到右看，遇到一个也存在于第二个字符串里的字符，就输出；
 		但是同一个字符只输出第一次出现的那个，也就是重复字符只输出一次
+
+	这题和union题的区别是：
+		inter = 共同拥有的字符（交集）
+		union = 所有出现过的字符（并集）
+	实际上这两个题的代码结构有 80% 是一样的，区别只在于输出条件：
+		inter: 在 s2 中找到才输出
+		union: 只要以前没出现过就输出
 */
 
 #include <unistd.h>
