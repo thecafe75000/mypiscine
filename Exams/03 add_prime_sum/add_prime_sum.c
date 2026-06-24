@@ -109,6 +109,8 @@ int	main(int argc, char **argv)
 	sum = 0;
 	while (i <= num)
 	{
+		// 判断当前遍历到的数字 i 是否为质数
+		// 这道题要求把 2~num 范围内的所有质数加起来，因此必须判断每一个 i
 		if (is_prime(i))
 			sum += i;
 		i++;
