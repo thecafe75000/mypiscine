@@ -41,9 +41,9 @@ Examples:
 
 #include <stdlib.h>
 
-int get_length(int start, int end)
+int	get_length(int start, int end)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (start > end)
@@ -53,22 +53,34 @@ int get_length(int start, int end)
 	return (len);
 }
 
+int	get_step(int start, int end)
+{
+	int	step;
+
+	if (start > end)
+		step = -1;
+	else
+		step = 1;
+	return (step);
+}
+
 int	*ft_range(int start, int end)
 {
-	int len;
-	int *result;
-	int i;
+	int	len;
+	int	*result;
+	int	i;
+	int step;
 
 	len = get_length(start, end);
 	result = malloc(sizeof(int) * len);
+	if (!result)
+		return (NULL);
 	i = 0;
+	step = get_step(start, end);
 	while (i < len)
 	{
 		result[i] = start;
-		if (start < end)
-			start += 1;
-		else
-			start -= 1;
+		start += step;
 		i++;
 	}
 	return (result);
@@ -76,13 +88,19 @@ int	*ft_range(int start, int end)
 
 #include <stdio.h>
 
-int main()
+int	main(void)
 {
-	int x = 0;
-	int y = -3;
-	int *result = ft_range(x, y);
-	int len = get_length(x, y);
-	int i = 0;
+	int	x;
+	int	y;
+	int	*result;
+	int	len;
+	int	i;
+
+	x = 0;
+	y = -3;
+	result = ft_range(x, y);
+	len = get_length(x, y);
+	i = 0;
 	while (i < len)
 	{
 		printf("%d ", result[i]);
