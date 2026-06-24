@@ -84,10 +84,13 @@ int	main(int argc, char **argv)
 	int	i;
 	int	first;
 
+	if (argc != 2)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
 	i = 0;
 	first = 1; // 表示还没输出单词
-	if (argc == 2)
-	{
 		while (argv[1][i])
 		{
 			// 跳过空格
@@ -104,7 +107,6 @@ int	main(int argc, char **argv)
 			if (first == 1)
 				first = 0; // 表示已经输出过单词
 		}
-	}
 	write(1, "\n", 1);
 	return (0);
 }
