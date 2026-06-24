@@ -44,6 +44,7 @@ int	ft_atoi_base(const char *str, int str_base);
 		result = result * 10 + 当前数字;
 	如果是其他进制，只要把 10 换成对应进制：
 		result = result * str_base + 当前数字;
+	即：result = result * base + 当前数字 能表示任何进制
 	另外：
 		数字转字符：+ '0'
 		字符转数字：- '0'
@@ -65,6 +66,12 @@ int	is_space(char c)
 		return (1);
 	return (0);
 }
+/*
+	get_num函数将字符映射为对应的数值（digit），
+	该数值不涉及进制转换本身；
+	进制由 base 决定合法范围，
+	并通过 result = result * base + digit 进行位权展开，从而得到十进制结果
+*/
 int	get_num(char c)
 {
 	if (c >= '0' && c <= '9')
