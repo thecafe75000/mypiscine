@@ -22,9 +22,20 @@ $>
 
 #include <unistd.h>
 
-void ft_putnbr(int n)
+/*
+	理解递归：
+	ft_putnbr(1234)
+	└── ft_putnbr(123)
+			└── ft_putnbr(12)
+				└── ft_putnbr(1)
+					→ print 1
+				→ print 2
+			→ print 3
+	└── print 4
+*/
+void	ft_putnbr(int n)
 {
-	char c;
+	char	c;
 
 	if (n >= 10)
 		ft_putnbr(n / 10);
@@ -32,7 +43,7 @@ void ft_putnbr(int n)
 	write(1, &c, 1);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	(void)argv;
 	if (argc == 1)
