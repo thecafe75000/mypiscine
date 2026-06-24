@@ -71,7 +71,7 @@ int	get_num(char c)
 		return (c - '0');
 	if (c >= 'a' && c <= 'f')
 		return (c - 'a' + 10); // 0–9 已经被数字字符占用了，a–f 必须从 10 开始接着往后排
-	if (c >= 'A' && c <= 'Z')
+	if (c >= 'A' && c <= 'F')
 		return (c - 'A' + 10);
 	return (-1);
 }
