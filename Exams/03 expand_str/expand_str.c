@@ -47,7 +47,7 @@ int	is_space(char c)
 {
 	return (c == ' ' || c == '\t');
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	int	i;
@@ -80,3 +80,38 @@ int	main(int argc, char **argv)
 	write(1, "\n", 1);
 	return (0);
 }
+*/
+
+// 版本2 推荐
+int	main(int argc, char **argv)
+{
+	int	i;
+	int	first;
+
+	if (argc != 2)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
+	i = 0;
+	first = 1;
+	while (argv[1][i])
+	{
+		// 跳过空格
+		while (argv[1][i] == ' ' || argv[1][i] == '\t')
+			i++;
+		// 读一个单词
+		if (argv[1][i] && first == 0)
+			write(1, "   ", 3);
+		while (argv[1][i] && argv[1][i] != ' ' && argv[1][i] != '\t')
+		{
+			write(1, &argv[1][i], 1);
+			i++;
+		}
+		if (first == 1)
+			first = 0; // 表示已经输出过单词
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+
