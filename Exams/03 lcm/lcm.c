@@ -52,7 +52,7 @@ unsigned int	lcm(unsigned int a, unsigned int b)
 		return (0);
 	x = a;
 	y = b;
-	while (y != 0)
+	while (y != 0) // while循环 = 求最大公约数 gcd
 	{
 		temp = y;
 		y = x % y;
