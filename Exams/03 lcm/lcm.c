@@ -37,6 +37,8 @@ Your function must be prototyped as follows:
 		比如获取 4 和 6 的最小公倍数 n：
 			n = 4 * 6 / 2 = 12
 			2 是 4 和 6 的最大公约数
+
+	a和b的最大公约数 = b和(a%b)的最大公约数
 */
 
 unsigned int	lcm(unsigned int a, unsigned int b)
