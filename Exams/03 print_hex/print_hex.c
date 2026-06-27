@@ -68,12 +68,14 @@ int	main(int argc, char **argv)
 	if (result == 0) // 0 是进制转换算法中的特殊值，通常需要单独处理
 		write(1, "0", 1);
 	j = 0;
+	// 获取的结果里数字的顺序是反的，因此要正确输出结果，也必须每个字符倒着输出
 	while (result > 0)
 	{
 		hex[j] = base[result % 16];
 		result = result / 16;
 		j++;
 	}
+	// 倒着输出hex[j]才会正确展示结果
 	while (j > 0)
 	{
 		j--;
