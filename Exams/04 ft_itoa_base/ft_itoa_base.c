@@ -16,7 +16,7 @@ If base is 10 and value is negative, the resulting string is preceded with a
 minus sign (-). With any other base, value is always considered unsigned.
 
 Your function must be declared as follows:
-char	*ft_itoa_base(int value, int base);
+char				*ft_itoa_base(int value, int base);
 
 	把一个 int 整数 value 转成指定进制 base 的字符串，并返回这个字符串
 	参数：
@@ -40,21 +40,6 @@ char	*ft_itoa_base(int value, int base);
 			也就是 把 -1 当成 2^32 - 1，然后正常转 16 进制
 		函数需要自己计算字符串长度并分配内存，例如：
 			ft_itoa_base(255, 16) 返回 “FF”，需要分配3个字符空间'F' 'F' '\0'
-		负数转换为 unsigned，就是在做“模 2³² 运算”，也就是：
-			value ≡ value + 2³²   (mod 2³²)
-			unsigned int 不是“没有负数”，而是“数值在一个环上循环”
-			例如：-42
-			因为 -42 在 mod 2³² 的世界里 = 2³² - 42
-			即 4294967296 - 42 = 4294967254
-			然后再把 4294967254 正常转成其他进制的对应数
-
-	核心逻辑就是：
-		判断是否需要负号。
-		把 value 转成一个无符号数来处理。
-		计算转换后需要多少位。
-		malloc 分配空间。
-		从后往前填入对应进制字符。
-		最后返回字符串。
 
 	进制转换的本质就是：
 		digit = number % base; (是在拿“当前这一轮的最后一位”)
@@ -64,6 +49,15 @@ char	*ft_itoa_base(int value, int base);
 		例如：
 			digit = 1234 % 10; // 4
 			number = 1234 / 10; // 123
+
+	核心逻辑就是：
+		判断是否需要负号。
+		把 value 转成一个无符号数来处理。
+		计算转换后需要多少位。
+		malloc 分配空间。
+		从后往前填入对应进制字符。
+		最后返回字符串。
+
 */
 
 #include <stdlib.h>
@@ -117,7 +111,7 @@ char	*ft_itoa_base(int value, int base)
 	int				len;
 
 	nbr = get_nbr(value, base, &sign);
-	len = get_len(nbr, base, sign);
+	len = get_length(nbr, base, sign);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);

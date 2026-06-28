@@ -71,7 +71,7 @@ char	*ft_itoa(int nbr)
 		str[0] = '-';
 		num = -num;
 	}
-	while (num > 0)
+	while (num != 0)
 	{
 		str[len - 1] = (num % 10) + '0'; // 从字符串末尾往前填, 获取最后一位数字
 		num = num / 10;                  // 去掉最后一位数字
@@ -86,7 +86,9 @@ int	main(void)
 {
 	char	*str;
 
-	str = ft_itoa(-2147483648);
+	// str = ft_itoa(-2147483648);
+	// str = ft_itoa(0);
+	str = ft_itoa(483648);
 	printf("%s\n", str);
 	free(str);
 	return (0);
