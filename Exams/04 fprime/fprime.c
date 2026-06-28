@@ -100,13 +100,13 @@ int	main(int argc, char **argv)
 	}
 	while (num > 1)
 	{
-		if (num % factor == 0)
+		if (num % factor == 0) // 质数可以被自身整除
 		{
 			if (!first)
 				printf("*");
 			printf("%d", factor);
 			first = 0;
-			num = num / factor;
+			num = num / factor; // 从 num 中“删除一个前面已经找到并输出了的factor 因子”
 		}
 		else
 			factor++; // 如果 num 不能被当前的 factor 整除，就换下一个候选因数factor
