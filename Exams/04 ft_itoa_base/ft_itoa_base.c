@@ -80,8 +80,11 @@ int	get_length(unsigned int nbr, int base, int sign)
 	return (len + sign);
 }
 
-// 处理负号和 unsigned 转换
-// 把 value 转成真正要处理的 unsigned int 数字，同时告诉外面需不需要负号
+/*
+ 该函数用于将 int 转换为 unsigned int 以便进行进制输出，并且仅在十进制且值为负时，
+ 通过 sign 标记符号，同时返回其绝对值
+ 即把 value 转成真正要处理的 unsigned int 数字，同时告诉外面需不需要负号
+ */
 static unsigned int	get_nbr(int value, int base, int *sign)
 {
 	*sign = 0;
@@ -118,7 +121,7 @@ char	*ft_itoa_base(int value, int base)
 	str[len] = '\0';
 	while (len > sign)
 	{
-		str[len-1] = "0123456789ABCDEF"[nbr % base];
+		str[len - 1] = "0123456789ABCDEF"[nbr % base];
 		nbr = nbr / base;
 		len--;
 	}
