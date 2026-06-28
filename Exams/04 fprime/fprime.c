@@ -77,46 +77,8 @@ $
 #include <stdio.h>
 #include <stdlib.h>
 
-void	print_factors(int num)
-{
-	int	factor;
-	int	first;
-
-	factor = 2;
-	first = 1;
-	if (num == 1)
-		printf("1");
-	while (num > 1)
-	{
-		if (num % factor == 0)
-		{
-			if (first == 0)
-				printf("*");
-			printf("%d", factor);
-			first = 0;
-			num = num / factor;
-		}
-		else
-			factor++; // 如果 num 不能被当前的 factor 整除，就换下一个候选因数factor
-	}
-}
-
-int main(int argc, char **argv)
-{
-	int num;
-
-	if (argc == 2)
-	{
-		num = atoi(argv[1]);
-		print_factors(num);
-	}
-	printf("\n");
-	return (0);
-}
-
 // factor指的是当前正在尝试的”候选因数“
 // first 的作用是：控制什么时候打印 *
-/*
 int	main(int argc, char **argv)
 {
 	int	num;
@@ -128,8 +90,11 @@ int	main(int argc, char **argv)
 		num = atoi(argv[1]);
 		factor = 2;
 		first = 1;
-		if (num == 1)
-			printf("1");
+		if (num <= 1)
+		{
+			printf("1\n");
+			return (0);
+		}
 		while (num > 1)
 		{
 			if (num % factor == 0)
@@ -147,4 +112,4 @@ int	main(int argc, char **argv)
 	printf("\n");
 	return (0);
 }
-*/
+
