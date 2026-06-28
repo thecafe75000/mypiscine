@@ -57,26 +57,26 @@ char	to_lower(char c)
 	return (c);
 }
 
-// 判断 str[i] 在前面有没有出现
-int already_showed(char *str, int i)
+// 判断 str[pos] 在前面有没有出现
+int	already_showed(char *str, int pos)
 {
-	int	j;
+	int	i;
 
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (i < pos)
 	{
-		if (to_lower(str[j]) == to_lower(str[i]))
+		if (to_lower(str[i]) == to_lower(str[pos]))
 			return (1);
-		j++;
+		i++;
 	}
 	return (0);
 }
 
 // 统计字母出现的次数
-int count_showed(char *str, char c)
+int	count_showed(char *str, char c)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -91,9 +91,9 @@ int count_showed(char *str, char c)
 
 int	main(int argc, char **argv)
 {
-	int i;
-	int count;
-	int first;
+	int	i;
+	int	count;
+	int	first;
 
 	if (argc != 2)
 	{
@@ -106,10 +106,10 @@ int	main(int argc, char **argv)
 	{
 		if ((argv[1][i] >= 'a' && argv[1][i] <= 'z') || (argv[1][i] >= 'A' && argv[1][i] <= 'Z'))
 		{
-			if (!already_showed(argv[i], i))
+			if (!already_showed(argv[1], i))
 			{
 				count = count_showed(argv[1], argv[1][i]);
-				if (!first)
+				if (!first) // 如果不是第一个输出
 					printf(", ");
 				printf("%d%c", count, to_lower(argv[1][i]));
 				first = 0;
@@ -117,7 +117,6 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-
 	printf("\n");
 	return (0);
 }
