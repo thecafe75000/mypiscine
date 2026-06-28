@@ -118,9 +118,9 @@ char	*ft_itoa_base(int value, int base)
 	str[len] = '\0';
 	while (len > sign)
 	{
-		len--;
-		str[len] = "0123456789ABCDEF"[nbr % base];
+		str[len-1] = "0123456789ABCDEF"[nbr % base];
 		nbr = nbr / base;
+		len--;
 	}
 	if (sign == 1)
 		str[0] = '-';
