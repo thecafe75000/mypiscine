@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 	{
 		if (num % factor == 0)
 		{
-			if (first == 0)
+			if (!first)
 				printf("*");
 			printf("%d", factor);
 			first = 0;
