@@ -85,31 +85,32 @@ int	main(int argc, char **argv)
 	int	factor;
 	int	first;
 
-	if (argc == 2)
+	if (argc != 2)
 	{
-		num = atoi(argv[1]);
-		factor = 2;
-		first = 1;
-		if (num <= 1)
+		printf("\n");
+		return (0);
+	}
+	num = atoi(argv[1]);
+	factor = 2;
+	first = 1;
+	if (num <= 1)
+	{
+		printf("1\n");
+		return (0);
+	}
+	while (num > 1)
+	{
+		if (num % factor == 0)
 		{
-			printf("1\n");
-			return (0);
+			if (first == 0)
+				printf("*");
+			printf("%d", factor);
+			first = 0;
+			num = num / factor;
 		}
-		while (num > 1)
-		{
-			if (num % factor == 0)
-			{
-				if (first == 0)
-					printf("*");
-				printf("%d", factor);
-				first = 0;
-				num = num / factor;
-			}
-			else
-				factor++; // 如果 num 不能被当前的 factor 整除，就换下一个候选因数factor
-		}
+		else
+			factor++; // 如果 num 不能被当前的 factor 整除，就换下一个候选因数factor
 	}
 	printf("\n");
 	return (0);
 }
-
