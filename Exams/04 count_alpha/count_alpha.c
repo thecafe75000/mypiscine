@@ -63,8 +63,6 @@ int already_showed(char *str, int i)
 	int	j;
 
 	j = 0;
-	if (!str)
-		return (1);
 	while (j < i)
 	{
 		if (to_lower(str[j]) == to_lower(str[i]))
