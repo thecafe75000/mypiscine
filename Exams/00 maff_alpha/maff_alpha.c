@@ -13,12 +13,12 @@ aBcDeFgHiJkLmNoPqRsTuVwXyZ$
 
 #include <unistd.h>
 
-int main()
+int	main(void)
 {
-	char c;
-	int i; // i是字母表的下标，从0开始计算
-	char temp;
+	char	c;
+	char	temp;
 
+	int i; // i是字母表的下标，从0开始计算
 	c = 'a';
 	i = 0;
 	while (c <= 'z')
@@ -34,3 +34,23 @@ int main()
 	return (0);
 }
 
+// 或者下面这个版本，注意使用的字母是大写
+int	main(void)
+{
+	char	c;
+	int		i;
+	char	temp;
+
+	c = 'A';
+	i = 0;
+	while (c <= 'Z')
+	{
+		temp = c;
+		if (i % 2 == 0)
+			temp += 32;
+		write(1, &temp, 1);
+		c++;
+		i++;
+	}
+	return (0);
+}
