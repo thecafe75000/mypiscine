@@ -136,12 +136,14 @@ int	get_words_num(char *str)
 	}
 	return (count); // 返回“总共进入单词区域的次数”, 也就是单词数量
 } // 一定要记住:count++ 只发生在这一瞬间：空格 → 非空格, 不是数字符，也不是数空格，而是数“进入状态的次数”
+
+
 // 获取单个单词的长度, 用于malloc申请内存
 // 第2个参数i是单词的起始位置(由外部传进来的起始位置)，因为字符串里的单词是从任意位置开始
 int	get_word_length(char *str, int i)
 {
 	int len;
-	
+
 	len = 0;
 	while (str[i] && !is_space(str[i]))
 	{
