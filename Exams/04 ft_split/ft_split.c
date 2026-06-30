@@ -103,16 +103,28 @@ int	get_words_num(char *str)
 	int	count;
 	int	i;
 	int	is_in_word;
+	int	len;
+	int	len;
 
 	count = 0;
 	i = 0;
-	// 标记你“现在在不在单词里”, `0` = 不在单词里（空格区）,`1` = 在单词里（单词内部）
+	// 标记当前字符“是否在单词里”, `0` = 不在单词里（空格区）,`1` = 在单词里（单词内部）
 	is_in_word = 0;
 	while (str[i])
 	{
-		// 单词数量 = 字符串中从 OUT（空白区）进入 IN（单词区）的次数
-		// 进入单词区域几次，就有几个单词
-		// 如果当前字符不是空格，而且你“之前不在单词里”，那么发现新单词
+		/*
+			单词数量 = 字符串中从 OUT（空白区）进入 IN（单词区）的次数
+			进入单词区域几次，就有几个单词
+			如果当前不在单词里面 并且 当前字符不是空格，我刚刚从空格区域进入了一个单词
+			这就是发现了一个新单词
+			注意：! 叫逻辑非（logical NOT）, 它不会改变变量代表的意义,它只是把真假反过来
+			!is_in_word 这里得到的 1 不是说在单词里面，而是指”表达式本身是真的“
+			即!is_in_word这个表达式是真,不改变 is_in_word = 0 这个值
+			也就是!is_in_word 其实就是 is_in_word == 0，两者完全等价
+			都表示如果当前字符不在单词里面
+			认为!is_in_word 的值是 1，所以应该是当前在单词里面，
+			是把表达式的结果和变量表示的状态混在一起了
+		*/
 		if (!is_in_word && !is_space(str[i]))
 		{
 			count++;
@@ -124,14 +136,12 @@ int	get_words_num(char *str)
 	}
 	return (count); // 返回“总共进入单词区域的次数”, 也就是单词数量
 } // 一定要记住:count++ 只发生在这一瞬间：空格 → 非空格, 不是数字符，也不是数空格，而是数“进入状态的次数”
-
-
 // 获取单个单词的长度, 用于malloc申请内存
 // 第2个参数i是单词的起始位置(由外部传进来的起始位置)，因为字符串里的单词是从任意位置开始
 int	get_word_length(char *str, int i)
 {
 	int len;
-
+	
 	len = 0;
 	while (str[i] && !is_space(str[i]))
 	{
@@ -171,7 +181,7 @@ char	**ft_split(char *str)
 			start = i;
 			word_len = get_word_length(str, i);
 			// 创建内层数组：存放每个 char * 指向的真正单词内容
-			result[j] = malloc(sizeof(char ) * (word_len + 1));
+			result[j] = malloc(sizeof(char) * (word_len + 1));
 			if (!result[j])
 				return (NULL);
 			k = 0;
