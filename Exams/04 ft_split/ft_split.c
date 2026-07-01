@@ -104,7 +104,6 @@ int	get_words_num(char *str)
 	int	i;
 	int	is_in_word;
 	int	len;
-	int	len;
 
 	count = 0;
 	i = 0;
