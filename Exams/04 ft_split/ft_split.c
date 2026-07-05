@@ -154,8 +154,8 @@ char	**ft_split(char *str)
 	int		word_num;
 	int		word_len;
 	char	**result;
-	int		i;
-	int		j;
+	int		i; // i：在原字符串 str 中移动
+	int		j; // 在结果数组 result 中移动（第几个单词）
 	int		start;
 	int		k;
 
