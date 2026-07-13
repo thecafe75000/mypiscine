@@ -3,22 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: string <string>                            +#+  +:+       +#+        */
+/*   By: hL <hL@stu.42.fr>                          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/16 11:53:25 by string            #+#    #+#             */
-/*   Updated: 2026/03/16 16:26:39 by string           ###   ########.fr       */
+/*   Created: 2026/03/15 22:20:18 by string            #+#    #+#             */
+/*   Updated: 2026/07/13 21:40:26 by hL               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 	把字符串数组 strs 中的所有字符串按顺序用 sep 连接起来，生成一个新的字符串，并返回这个新字符串（该字符串必须是 malloc 分配的）。如果 size == 0，返回一个可 free 的空字符串
-	注意：新字符串必须自己分配内存：malloc(最终长度)，需要在 malloc 之前准确计算最终字符串需要多少内存
-			最后一个字符串后面没有分隔符
+	注意：新字符串必须自己分配内存：malloc(最终长度)，需要在 malloc 之前准确计算最终字符串需要多少内存，最后一个字符串后面没有分隔符
+	ft_strjoin就是把一个字符串数组 (char **strs) 中的所有字符串，用指定的分隔符 (sep) 连接起来，返回一个新字符串
+
+	参数：
+		- size 表示有几个字符串
+		- char **strs 表示字符串数组
+		- char *sep 表示分隔符
+
+	举例：
+		char *strs[] =
+		{
+			"apple",
+			"banana",
+			"orange"
+		};
+
+		sep = "---"
+	函数应该返回：apple---banana---orange
  */
 #include <stdlib.h>
 
-// 计算单个字符串长度的函数
-int	str_length(char *str)
+// 计算一个字符串长度
+int	ft_strlen(char *str)
 {
 	int	len;
 
@@ -28,123 +44,112 @@ int	str_length(char *str)
 	return (len);
 }
 
-// 处理空字符串，即当size == 0时的情况
-char	*ft_emptystr(void)
+// 计算整个字符串数组所有字符串长度总和
+int	ft_strslen(char **strs, int size)
 {
-	char	*result;
+	int	i;
+	int	lens;
 
-	result = (char *)malloc(1 * sizeof(char));
-	if (!result)
-		return (NULL);
-	*result = '\0';
-	return (result);
+	i = 0;
+	lens = 0;
+	while (i < size)
+	{
+		lens += ft_strlen(strs[i]);
+		i++;
+	}
+	return (lens);
 }
-
-// 计算合并后新字符串的长度
-int	ft_totallen(int size, char **strs, char *sep)
+// 复制字符串（不复制 '\0'）
+void	ft_strcpy(char *dest, char *src)
 {
-	int	total_len;
-	int	sep_len;
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+}
+// 把所有字符串依次复制到 result 中
+void	ft_join(char *result, int size, char **strs, char *sep)
+{
 	int	i;
 
-	total_len = 0;
-	sep_len = str_length(sep);
 	i = 0;
 	while (i < size)
 	{
-		while (i < size)
+		ft_strcpy(result, strs[i]);
+		result += ft_strlen(strs[i]);
+		if (i != size - 1) // 最后一个字符串后面不能再加分隔符,因此要size-1
 		{
-			total_len += str_length(strs[i]);
-			i++;
+			ft_strcpy(result, sep);
+			result += ft_strlen(sep);
 		}
-		sep_len = str_length(sep);
-		total_len += sep_len * (size - 1) + 1;
-	}
-	return (total_len);
-}
-
-// 拷贝字符串到目标数组里, 从数组下标pos开始，返回新的下标
-int	ft_copystr(char *dest, char *str, int pos)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		dest[pos] = str[i];
-		pos++;
 		i++;
 	}
-	return (pos);
+	*result = '\0';
 }
 
-// 拷贝分隔符到目标数组里, 从数组下标pos开始，返回新的下标位置
-int	ft_copysep(char *dest, char *sep, int pos)
-{
-	int	i;
-
-	i = 0;
-	while (sep[i])
-	{
-		dest[pos] = sep[i];
-		pos++;
-		i++;
-	}
-	return (pos);
-}
-
-// 参数char **strs 表示要接收多个字符串，即接收字符串数组
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	char	*result;
-	int		total_len;
-	int		pos;
-	int		i;
 
 	if (size == 0)
-		ft_emptystr();
-	total_len = ft_totallen(size, strs, sep);
-	result = (char *)malloc(total_len * sizeof(char));
-	if (!result)
-		return (NULL);
-	pos = 0;
-	i = 0;
-	while (i < size)
 	{
-		pos = ft_copystr(result, strs[i], pos);
-		if (i < size - 1)
-			pos = ft_copysep(result, sep, pos);
-		i++;
+		result = (char *)malloc(1 * sizeof(char));
+		*result = '\0';
+		return (result);
 	}
-	result[pos] = '\0';
+	result = (char *)malloc((ft_strslen(strs, size) + (ft_strlen(sep) * (size
+						- 1)) + 1) * sizeof(char));
+	if (result == NULL)
+		return (NULL);
+	ft_join(result, size, strs, sep);
 	return (result);
 }
 
 #include <stdio.h>
 
+void	ft_strjoin_test(char *test[])
+{
+	char	*output;
+
+	output = ft_strjoin(0, test, ",");
+	printf("test0:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(0, test, "");
+	printf("test1:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(0, test, "-----");
+	printf("test2:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(5, test, ",");
+	printf("test3:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(5, test, "");
+	printf("test4:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(5, test, "-----");
+	printf("test5:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(2, test, ",");
+	printf("test6:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(2, test, "");
+	printf("test7:\n%s\n", output);
+	free(output);
+	output = ft_strjoin(2, test, "-----");
+	printf("test8:\n%s\n", output);
+	free(output);
+	printf("===============\n");
+}
+
 int	main(void)
 {
-	char	*arr1[] = {"Hello", "42 Paris", "C"};
-	char	*arr2[] = {""};
-	char	*arr3[] = {"abcefg123", "Hi"};
-	char	*res_output1;
-	char	*res_output2;
-	char	*res_output3;
+	char	*test0[] = {"head", "...", "next is empty", "", "this end"};
+	char	*test1[] = {""};
+	char	*test2[] = {"1adfaeg68a4eg"};
 
-	res_output1 = ft_strjoin(3, arr1, " - ");
-	if (!res_output1)
-		printf("null1");
-	printf("output: %s\n", res_output1);
-	free(res_output1);
-	res_output2 = ft_strjoin(0, arr2, ", ");
-	if (!res_output2)
-		printf("null2");
-	printf("output: %s\n", res_output2);
-	free(res_output2);
-	res_output3 = ft_strjoin(2, arr3, " * ");
-	if (!res_output3)
-		printf("null3");
-	printf("output: %s\n", res_output3);
-	free(res_output3);
-	return (0);
+	ft_strjoin_test(test0);
+	ft_strjoin_test(test1);
+	ft_strjoin_test(test2);
 }

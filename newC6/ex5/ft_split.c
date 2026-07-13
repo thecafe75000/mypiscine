@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hL <hL@stu.42.fr>                          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/25 15:11:30 by hL                #+#    #+#             */
-/*   Updated: 2026/05/29 14:44:39 by hL               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 /* 题目要求：
 	把字符串 str 按照 charset 中的任意字符进行切分，得到若干个非空单词，
@@ -17,95 +6,105 @@
 #include <stdlib.h>
 
 // 判断当前字符是不是charset里的分隔符
-int	is_separator(char c, char *charset)
+int	in_charset(char c, char *charset)
 {
-	int	i;
-
-	i = 0;
-	while (charset[i])
+	while (*charset)
 	{
-		if (c == charset[i])
+		if (c == *charset)
 			return (1);
-		i++;
+		charset++;
 	}
 	return (0);
 }
-
-// 计算为数组申请多大的内存
-// if 判断：判断当前字符是不是一个新单词的开头，如果是就count++
-int	count_words(char *str, char *charset)
+// 统计字符串里有多少个单词
+int	count_substr(char *str, char *charset)
 {
 	int	i;
 	int	count;
+	int	range[2];
 
 	i = 0;
 	count = 0;
+	range[0] = -1;
 	while (str[i])
 	{
-		if (!is_separator(str[i], charset) && (i == 0 || is_separator(str[i
-					- 1], charset)))
-			count++;
+		if (in_charset(str[i], charset))
+		{
+			range[1] = i;
+			if (range[1] - range[0] > 1)
+				count++;
+			range[0] = range[1];
+		}
 		i++;
 	}
+	if (i - range[0] > 1)
+		count++;
+	return (count);
+}
+// 复制一个单词，start 表示的是前一个分隔符的位置，真正复制从 start + 1 开始
+int	get_substr(char **substr, char *str, int start, int end)
+{
+	int	i;
+
+	if (end - start < 1)
+		return (0);
+	*substr = (char *)malloc((end - start) * sizeof(char));
+	if (!*substr)
+		return (-1);
+	i = 0;
+	while (i + (start + 1) < end)
+	{
+		(*substr)[i] = str[i + (start + 1)];
+		i++;
+	}
+	(*substr)[i] = '\0';
+	return (i);
+}
+
+// 循环提取所有单词
+int	get_all_substrs(char **result, char *str, char *charset)
+{
+	int	range[2];
+	int	count;
+
+	range[0] = -1;
+	range[1] = 0;
+	count = 0;
+	while (str[range[1]])
+	{
+		if (in_charset(str[range[1]], charset))
+		{
+			if (range[1] - range[0] > 1 && get_substr(&(result[count++]), str,
+					range[0], range[1]) == -1)
+				return (-1);
+			range[0] = range[1];
+		}
+		range[1]++;
+	}
+	if (range[1] - range[0] > 1 && get_substr(&(result[count++]), str, range[0],
+			range[1]) == -1)
+		return (-1);
+	result[count] = NULL;
 	return (count);
 }
 
-// 获取当前单词的长度
-int	word_len(char *str, char *charset)
+char	**ft_split(char *str, char *charset)
 {
-	int	len;
+	int		substr_count;
+	char	**reslut;
 
-	len = 0;
-	while (str[len] && !is_separator(str[len], charset))
-		len++;
-	return (len);
-}
-// 把当前单词从原字符串里复制出来
-char	*copy_word(char *str, char *charset)
-{
-	int		len;
-	int		i;
-	char	*word;
-
-	len = word_len(str, charset);
-	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word)
+	substr_count = count_substr(str, charset);
+	reslut = (char **)malloc((substr_count + 1) * sizeof(char *));
+	if (reslut == NULL)
 		return (NULL);
-	i = 0;
-	while (i < len)
+	if (!*str || substr_count == 0)
 	{
-		word[i] = str[i];
-		i++;
+		reslut[0] = NULL;
+		return (reslut);
 	}
-	word[i] = '\0';
-	return (word);
-}
-
-// 负责总调度
-char	**count_words(char *str, char *charset)
-{
-	int		i;
-	int		j;
-	char	**result;
-
-	result = (char **)malloc(sizeof(char) * (count_words(str, charset) + 1));
-	if (!result)
+	if (get_all_substrs(reslut, str, charset) == -1)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		while (str[i] && is_separator(str[i], charset))
-			i++;
-		if (str[i])
-		{
-			result[j] = copy_word(&str[i], charset);
-			j++;
-			i += word_len(&str[i], charset);
-		}
-	}
-	result[j] = NULL;
-	return (result);
+	return (reslut);
 }
 
 #include <stdio.h>
@@ -124,12 +123,12 @@ void	ft_split_test(char *str, char *charset)
 			free(result[i]);
 		i++;
 	}
-	printf("================\n");
+	free(result);
+	printf("====================\n");
 }
 
 int	main(void)
 {
-	ft_split_test("abc,def-ggg#123", ",-#");
 	ft_split_test("abc,def.lll!123", ",.!");
 	ft_split_test("abc,def..!!123", ",.!");
 	ft_split_test("abc,def..!!123", "$");
@@ -140,5 +139,4 @@ int	main(void)
 	ft_split_test("abc,def..!!123", "abc,def..!!12");
 	ft_split_test("abc,def..!!123", "bc,def..!!123");
 	ft_split_test("abc,def..!!123", "abc,def..!!123");
-	return (0);
 }
