@@ -1,81 +1,65 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_convert_base2.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hL <hL@stu.42.fr>                          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/17 10:34:06 by hL                #+#    #+#             */
-/*   Updated: 2026/03/26 16:53:03 by hL               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*
+	要求：把字符串 nbr 按照 base_from 的规则读成一个数，再把这个数按 base_to 的规则重新写成新的字符串返回
+	也就是说：
+		- 输入是一个 char * 字符串, 这个字符串的数值意义，要根据 base_from 来解释
+		- 然后输出一个新字符串，内容用 base_to 表示
+		- 返回值也是char * 类型
+	• 如果 base 不合法，函数必须返回 NULL. 以下是 非法 base 的例子：
+		- base 为空字符串，或者只有 一个字符
+		- base 中包含 重复字符
+		- base 中包含 '+'、'-' 或者空白字符（whitespace）
 
+	进制系统（base system）由用于表示数字的所有符号组成：
+		- 0123456789 是常用的十进制
+		- 01 是二进制
+		- 0123456789ABCDEF 是十六进制
+		- poneyvif 是八进制
+
+	2个c文件：
+		- convert_base: 主控制逻辑，只负责流程控制和调用工具函数
+		- convert_base2: 用来放所有工具函数
+*/
 #include <stdlib.h>
 
-int		check_base(char *base);
-
-// 计算把数字nbr按照base_len进制写出来总共需要几个字符，为申请内存做准备
-// 如果是负数，还要额外给负号留一个位置
-// 这个函数本质上是在计算：一个数在 base_len 进制下有多少位(即个十百千万这些位数)，就可以通过不断除以 base_len 来计算
-int	nbr_len(unsigned long nbr, int neg, int base_len)
+int str_length(char *str)
 {
-	int	len;
-
-	len = 1;
-	if (neg)
-		len++;
-	while (nbr >= (unsigned long)base_len)
-	{
-		nbr = nbr / base_len;
-		len++;
-	}
-	return (len);
+	int i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-// 把数字 nbr 转换后的每一位字符，填到结果字符串 res 中
-// 这个函数并不负责分配内存，也不负责加 '\0'，它只负责“填内容”
-// 用 % base_len 取出最低位, 用 / base_len 去掉最低位, 从字符串末尾往前填入
-// base_len：进制长度, digit：当前取出的某一位数字值
-// 参数len 是结果字符串的总长度，不是数组大小
-void	fill_result(char *res, unsigned long nbr, char *base, int len)
+int check_base(char *base)
 {
-	int	base_len;
-	int	digit;
-
-	base_len = check_base(base);
-	while (nbr > 0)
-	{
-		digit = nbr % base_len;
-		len = len - 1;
-		res[len] = base[digit];
-		nbr = nbr / base_len;
-	}
-}
-
-// 完整地把一个long类型整数nbr转换成任意进制字符串，并返回这个字符串
-char	*ft_putnbr_base(long nbr, char *base)
-{
-	char			*res;
-	int				len;
-	int				base_len;
-	unsigned long	nb;
-	int				neg;
-
-	base_len = check_base(base);
-	neg = (nbr < 0);
-	if (neg)
-		nb = (unsigned long)(-(nbr + 1)) + 1;
-	else
-		nb = (unsigned long)nbr;
-	len = nbr_len(nb, neg, base_len);
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	if (!res)
+	int i = 0;
+	if (str_length(base) < 2)
 		return (0);
-	res[len] = '\0';
-	if (nb == 0)
-		res[0] = base[0];
-	if (neg)
-		res[0] = '-';
-	fill_result(res, nb, base, len);
-	return (res);
+	while (base[i])
+	{
+		int j = 0;
+		while (base[j])
+		{
+			if (j != i && base[i] == base[j])
+				return (0);
+			if (base[j] == '+' || base[j] == '-'
+				|| (base[j] >= 9 && base[j] <= 13) || base[j] == ' ')
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (i);
 }
+
+int is_in_base(char c, char *base)
+{
+	int i = 0;
+	while (base[i])
+	{
+		if (c == base[i])
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+

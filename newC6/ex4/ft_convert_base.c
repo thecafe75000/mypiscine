@@ -1,111 +1,111 @@
-/*
-	要求：把字符串 nbr 按照 base_from 的规则读成一个数，再把这个数按 base_to 的规则重新写成新的字符串返回
-	也就是说：
-		- 输入是一个 char * 字符串, 这个字符串的数值意义，要根据 base_from 来解释
-		- 然后输出一个新字符串，内容用 base_to 表示
-		- 返回值也是char * 类型
-	• 如果 base 不合法，函数必须返回 NULL. 以下是 非法 base 的例子：
-		- base 为空字符串，或者只有 一个字符
-		- base 中包含 重复字符
-		- base 中包含 '+'、'-' 或者空白字符（whitespace）
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_convert_base.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hL <hL@stu.42.fr>                          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 10:34:06 by hL                #+#    #+#             */
+/*   Updated: 2026/07/20 08:12:36 by hL               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	进制系统（base system）由用于表示数字的所有符号组成：
-		- 0123456789 是常用的十进制
-		- 01 是二进制
-		- 0123456789ABCDEF 是十六进制
-		- poneyvif 是八进制
+int		str_length(char *str);
+int		check_base(char *base);
+int		is_in_base(char c, char *base);
 
-	2个c文件：
-		- convert_base: 主控制逻辑，只负责流程控制和调用工具函数
-		- convert_base2: 用来放所有工具函数
-*/
 #include <stdlib.h>
 
-char	*ft_putnbr_base(long nbr, char *base);
-
-int	check_base(char *base)
+int	myatoi(char *str, char *base)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (base[i])
-	{
-		if (base[i] == '+' || base[i] == '-' || base[i] == ' ' || (base[i] >= 9
-				&& base[i] <= 13))
-			return (0);
-		j = i + 1;
-		while (base[j])
-		{
-			if (base[i] == base[j])
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	if (i < 2)
-		return (0);
-	return (i);
-}
-
-
-int	in_base(char c, char *base)
-{
+	int	sign;
+	int	num;
 	int	i;
 
-	i = 0;
-	while (base[i])
-	{
-		if (base[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-long	ft_atoi_base(char *str, char *base)
-{
-	long	nb;
-	int		sign;
-	int		base_len;
-	int		digit;
-
-	nb = 0;
 	sign = 1;
-	base_len = check_base(base);
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	while (*str == '+' || *str == '-')
+	num = 0;
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	while (str[i] == '+' || str[i] == '-')
 	{
-		if (*str == '-')
-			sign = -sign;
-		str++;
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
 	}
-	digit = in_base(*str, base);
-	while (digit != -1)
+	while (is_in_base(str[i], base) != -1)
 	{
-		nb = nb * base_len + digit;
-		str++;
-		digit = in_base(*str, base);
+		num = num * check_base(base) + is_in_base(str[i], base);
+		i++;
 	}
-	return (nb * sign);
+	return (num * sign);
+}
+
+// compter la taille d'un int selon notre base
+int	nbr_length(int nb, char *base)
+{
+	int	count;
+
+	count = 0;
+	if (nb <= 0)
+		count++;
+	while (nb != 0)
+	{
+		nb = nb / check_base(base);
+		count++;
+	}
+	return (count);
+}
+
+// converti int en char
+char	*my_itoa_base(int num, char *base)
+{
+	char	*str;
+	int		len;
+
+	len = nbr_length(num, base);
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] = '\0';
+	len--;
+	if (num < 0)
+	{
+		str[0] = '-';
+		num = num * -1;
+	}
+	if (num == 0)
+		str[0] = '0';
+	while (num > 0)
+	{
+		str[len] = base[num % check_base(base)];
+		num = num / check_base(base);
+		len--;
+	}
+	return (str);
 }
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
-	long	num;
-	char	*convert_str;
+	int	nb;
+	int	len_from;
+	int	len_to;
 
-	num = 0;
-	if (!check_base(base_from) || !check_base(base_to))
+	len_from = check_base(base_from);
+	len_to = check_base(base_to);
+	if (len_from == 0 || len_to == 0)
 		return (0);
-	num = ft_atoi_base(nbr, base_from);
-	convert_str = ft_putnbr_base(num, base_to);
-	return (convert_str);
+	nb = myatoi(nbr, base_from);
+	return (my_itoa_base(nb, base_to));
 }
 
 #include <stdio.h>
 
+int main(int argc, char **argv)
+{
+	(void)argc;
+	printf("%s\n", ft_convert_base(argv[1], argv[2], argv[3]));
+	return (0);
+}
+/*
 void	ft_test(char *nbr, char *base_from, char *base_to)
 {
 	char	*res;
@@ -144,4 +144,4 @@ int	main(void)
 	ft_test("42", "0123456789", "0+1");
 	ft_test("0", "0123456789", "12");
 	return (0);
-}
+}*/
