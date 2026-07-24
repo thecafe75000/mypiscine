@@ -94,8 +94,7 @@ int	main(int argc, char **argv)
 	j = 0;
 	while (argv[2][j])
 	{
-		if (!is_showed(argv[2][j], argv[1], i) && !is_showed(argv[2][j],
-				argv[2], j))
+		if (!is_showed(argv[2][j], argv[1], i) && !is_showed(argv[2][j], argv[2], j))
 			write(1, &argv[2][j], 1);
 		j++;
 	}
